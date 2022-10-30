@@ -4,7 +4,7 @@ module.exports = {
     es2021: true,
   },
   extends: [
-    'plugin:vue/essential',
+    'plugin:vue/vue3-essential',
     'airbnb-base',
   ],
   parserOptions: {
@@ -15,5 +15,7 @@ module.exports = {
     'vue',
   ],
   rules: {
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'vue/multi-word-component-names': 'off',
   },
 };
