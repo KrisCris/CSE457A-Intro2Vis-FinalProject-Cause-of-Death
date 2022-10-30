@@ -4,27 +4,39 @@
 <template>
   <aside>
     <header>
-      <icon name="heart-rate" fill="red"/>
+      <div class="icon-wrapper">
+        <icon name="heart-rate" fill="red"/>
+      </div>
       <h1>Causes of Death</h1>
     </header>
     <hr>
-
+    <div class="routes">
+      <router-link to="/geo-graph" class="route" activeClass="active-route">
+        <div class="icon-wrapper">
+          <icon name="world" fill="white" size="1em"/>
+        </div>
+        <p>Geo Graph</p>
+      </router-link>
+    </div>
   </aside>
-  <main></main>
+  <main>
+    <router-view></router-view>
+  </main>
 </template>
 
 <style scoped lang="scss">
 $text: white;
 
 aside {
-  padding: 30px;
+  width: max-content;
+  height: 100%;
   background-color: #252526;
+}
 
-  header {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+header {
+  display: flex;
+  align-items: center;
+  padding: 2em;
 
   h1 {
     margin: 0;
@@ -33,12 +45,36 @@ aside {
 }
 
 hr {
+  margin: 0;
   border: none;
   border-bottom: 1px solid $text;
-  margin: 20px 0 20px 0
 }
 
 main {
   flex: 1;
+}
+
+.route {
+  text-decoration: none;
+  font-size: 1em;
+  color: $text;
+  padding: 1em 2em;
+  display: flex;
+  align-items: center;
+
+  p {
+    margin: 0;
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  margin-right: 1em;
+  width: 2em;
+  justify-content: flex-end;
+}
+
+.active-route {
+  background-color: #37373D;
 }
 </style>
