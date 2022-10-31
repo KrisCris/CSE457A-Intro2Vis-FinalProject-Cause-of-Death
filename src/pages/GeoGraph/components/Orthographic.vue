@@ -17,22 +17,21 @@ const wrapper = ref();
 
 onMounted(() => {
   const { width } = wrapper.value.getBoundingClientRect();
-  const radius = width - 20;
+  const radius = width - 50;
 
   const rotate = [-15, -40];
   const projection = geoOrthographic()
     .rotate(rotate)
-    .scale(450)
-    .translate([width / 2, width / 2]);
+    .fitSize([radius, radius], world)
+    .translate([radius / 2, radius / 2]);
   const path = geoPath().projection(projection);
 
   select(svg.value)
     .attr('width', radius)
     .attr('height', radius)
     .selectAll('path')
-    .data(world.features, (d) => d.id)
-    .enter()
-    .append('path')
+    .data(world.features, d => d.id)
+    .join('path')
     .attr('d', path)
     .attr('fill', () => getRandomColor());
 });
@@ -45,4 +44,8 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+div {
+  display: flex;
+  justify-content: center;
+}
 </style>

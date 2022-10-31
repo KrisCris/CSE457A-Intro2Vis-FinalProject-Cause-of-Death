@@ -17,10 +17,10 @@ const wrapper = ref();
 
 onMounted(() => {
   const { width } = wrapper.value.getBoundingClientRect();
-  const radius = width - 20;
+  const radius = width - 50;
 
   const projection = geoMercator()
-    .scale(200)
+    .fitWidth(radius, world)
     .translate([width / 2, width / 2]);
 
   const path = geoPath().projection(projection);
@@ -29,9 +29,8 @@ onMounted(() => {
     .attr('width', radius)
     .attr('height', radius)
     .selectAll('path')
-    .data(world.features, (d) => d.id)
-    .enter()
-    .append('path')
+    .data(world.features, d => d.id)
+    .join('path')
     .attr('d', path)
     .attr('fill', () => getRandomColor());
 });
