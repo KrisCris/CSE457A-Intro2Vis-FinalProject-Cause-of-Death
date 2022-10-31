@@ -11,16 +11,16 @@
     </header>
     <hr>
     <div class="routes">
-      <router-link to="/geo-graph" class="route" activeClass="active-route">
+      <RouterLink to="/geo-graph" class="route" activeClass="active-route">
         <div class="icon-wrapper">
           <icon name="world" fill="white" size="1em"/>
         </div>
         <p>Geo Graph</p>
-      </router-link>
+      </RouterLink>
     </div>
   </aside>
   <main>
-    <router-view></router-view>
+    <RouterView/>
   </main>
 </template>
 
@@ -52,6 +52,7 @@ hr {
 
 main {
   flex: 1;
+  overflow: scroll;
 }
 
 .route {

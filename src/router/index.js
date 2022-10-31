@@ -5,7 +5,21 @@ export default createRouter({
   routes: [
     {
       path: '/geo-graph',
-      component: () => import('../pages/GeoGraph.vue'),
+      component: () => import('../pages/GeoGraph/index.vue'),
+      children: [
+        {
+          path: '3d',
+          component: () => import('../pages/GeoGraph/components/Orthographic.vue'),
+        },
+        {
+          path: '2d',
+          component: () => import('../pages/GeoGraph/components/Mercator.vue'),
+        },
+        {
+          path: '',
+          redirect: '/geo-graph/3d',
+        },
+      ],
     },
     {
       path: '/',
