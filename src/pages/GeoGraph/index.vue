@@ -8,7 +8,11 @@
       <RouterLink to="/geo-graph/2d" class="route" active-class="active-route">2D</RouterLink>
     </div>
   </div>
-  <RouterView />
+  <RouterView v-slot="{ Component }">
+    <KeepAlive>
+      <component :is="Component" />
+    </KeepAlive>
+</RouterView>
 </template>
 
 <style scoped lang="scss">
