@@ -1,31 +1,81 @@
 <script setup>
-// This starter template is using Vue 3 <script setup> SFCs
-// Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
-import HelloWorld from './components/HelloWorld.vue'
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
-  </div>
-  <HelloWorld msg="Vite + Vue" />
+  <aside>
+    <header>
+      <div class="icon-wrapper">
+        <icon name="heart-rate" fill="red"/>
+      </div>
+      <h1>Causes of Death</h1>
+    </header>
+    <hr>
+    <div class="routes">
+      <RouterLink to="/geo-graph" class="route" activeClass="active-route">
+        <div class="icon-wrapper">
+          <icon name="world" fill="white" size="1em"/>
+        </div>
+        <p>Geo Graph</p>
+      </RouterLink>
+    </div>
+  </aside>
+  <main>
+    <RouterView/>
+  </main>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
+<style scoped lang="scss">
+$text: white;
+
+aside {
+  width: max-content;
+  height: 100%;
+  background-color: #252526;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+
+header {
+  display: flex;
+  align-items: center;
+  padding: 2em;
+
+  h1 {
+    margin: 0;
+    color: $text;
+  }
 }
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+
+hr {
+  margin: 0;
+  border: none;
+  border-bottom: 1px solid $text;
+}
+
+main {
+  flex: 1;
+  overflow: scroll;
+}
+
+.route {
+  text-decoration: none;
+  font-size: 1em;
+  color: $text;
+  padding: 1em 2em;
+  display: flex;
+  align-items: center;
+
+  p {
+    margin: 0;
+  }
+}
+
+.icon-wrapper {
+  display: flex;
+  margin-right: 1em;
+  width: 2em;
+  justify-content: flex-end;
+}
+
+.active-route {
+  background-color: #37373D;
 }
 </style>
