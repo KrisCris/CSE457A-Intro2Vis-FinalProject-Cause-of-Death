@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { geoOrthographic, geoPath, geoMercator } from 'd3';
-import world from '../assets/data/countries.json';
+// import world from '../assets/data/countries.json';
+import world from '../assets/data/custom.geo.json';
 
 export default defineStore('world', () => {
   const projection = {
