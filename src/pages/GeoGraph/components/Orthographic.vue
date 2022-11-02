@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-import { select, geoOrthographic, geoPath } from 'd3';
+import { geoOrthographic, geoPath } from 'd3';
 import world from '../../../assets/data/countries.json';
 
 function getRandomColor() {
@@ -12,34 +12,33 @@ function getRandomColor() {
   return color;
 }
 
-const svg = ref();
 const wrapper = ref();
+const radius = ref();
+
+const path = geoPath();
 
 onMounted(() => {
   const { width } = wrapper.value.getBoundingClientRect();
-  const radius = width - 50;
+  radius.value = width - 50;
 
   const rotate = [-15, -40];
   const projection = geoOrthographic()
     .rotate(rotate)
-    .fitSize([radius, radius], world)
-    .translate([radius / 2, radius / 2]);
-  const path = geoPath().projection(projection);
-
-  select(svg.value)
-    .attr('width', radius)
-    .attr('height', radius)
-    .selectAll('path')
-    .data(world.features, d => d.id)
-    .join('path')
-    .attr('d', path)
-    .attr('fill', () => getRandomColor());
+    .fitSize([radius.value, radius.value], world)
+    .translate([radius.value / 2, radius.value / 2]);
+  path.projection(projection);
 });
 </script>
 
 <template>
   <div ref="wrapper">
-    <svg ref="svg"></svg>
+    <svg :width="radius" :height="radius">
+      <path v-for="d in world.features"
+        :key="d.id"
+        :d="path(d)"
+        :fill="getRandomColor()"
+      />
+    </svg>
   </div>
 </template>
 
