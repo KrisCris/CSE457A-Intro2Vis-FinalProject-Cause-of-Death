@@ -6,20 +6,6 @@ export default createRouter({
     {
       path: '/geo-graph',
       component: () => import('../pages/GeoGraph/index.vue'),
-      children: [
-        {
-          path: '3d',
-          component: () => import('../pages/GeoGraph/components/Orthographic.vue'),
-        },
-        {
-          path: '2d',
-          component: () => import('../pages/GeoGraph/components/Mercator.vue'),
-        },
-        {
-          path: '',
-          redirect: '/geo-graph/3d',
-        },
-      ],
     },
     {
       // to be replaced
@@ -36,7 +22,7 @@ export default createRouter({
     },
     {
       path: '/:catchAll(.*)',
-      redirect: '/'
+      redirect: '/',
     },
   ],
 });
