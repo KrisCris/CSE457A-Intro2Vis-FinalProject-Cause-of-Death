@@ -12,6 +12,8 @@ const wrapper = ref();
 const svg = ref();
 const group = ref();
 const Zoom = zoom().scaleExtent([1, 8]);
+const tooltip = ref();
+const hover = ref(null);
 
 onMounted(() => {
   const { width } = wrapper.value.getBoundingClientRect();
@@ -65,6 +67,17 @@ const reset = () => {
   );
 };
 
+const scaleColor = d => {
+  const meta = world.data[d.properties.adm0_a3];
+  return world.colorScale(meta ? meta[meta.length - 1] : 1);
+};
+
+const onHover = (d, e) => {
+  hover.value = world.data[d.properties.adm0_a3];
+  tooltip.value.style.top = `${e.clientY + 20}px`;
+  tooltip.value.style.left = `${e.clientX + 20}px`;
+};
+
 </script>
 
 <template>
@@ -78,12 +91,21 @@ const reset = () => {
         <path v-for="d in world.countries"
           :key="d.id"
           :d="world.pathGenerator(d)"
-          fill="black"
+          :fill="scaleColor(d)"
           @click="test(d, $event)"
+          @mouseenter="onHover(d, $event)"
+          @mouseleave="hover = null"
         />
       </g>
     </svg>
   </div>
+  <Teleport to="body">
+    <div ref="tooltip" v-show="hover" class="tooltip">
+      <h4>{{hover?.[0]}}</h4>
+      <p>Year: {{world.year}}</p>
+      <p>Total Death: {{hover?.[hover?.length - 1]}}</p>
+    </div>
+  </Teleport>
 </template>
 
 <style scoped lang="scss">
@@ -101,5 +123,25 @@ div {
 
 path {
   cursor: pointer;
+  transition: fill .3s;
+}
+
+.tooltip {
+  background-color: white;
+  border-radius: 8px;
+  position: absolute;
+  padding: 2rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, .25);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h4, p {
+    margin: 0;
+  }
+
+  p {
+    color: gray;
+  }
 }
 </style>
