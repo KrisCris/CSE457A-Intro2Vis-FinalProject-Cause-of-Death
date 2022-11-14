@@ -6,7 +6,7 @@ import dsv from '@rollup/plugin-dsv';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '',
+  base: './',
   plugins: [
     vue(),
     dsv(),
