@@ -7,7 +7,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - id: Build-Vue
-      uses: csex57/causeofdeath/.github/workflows/buildVue.yml
+      uses: KrisCris/VuePagesAction@1.0.0
       with:
         username: 'csex57'
         reponame: 'causeofdeath'
