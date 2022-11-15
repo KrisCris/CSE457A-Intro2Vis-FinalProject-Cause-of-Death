@@ -4,7 +4,6 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import { resolve } from 'path';
 import dsv from '@rollup/plugin-dsv';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   base: './',
   plugins: [
