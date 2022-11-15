@@ -7,8 +7,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - id: Build-Vue
-      uses: xRealNeon/VuePagesAction@1.0.1
+      uses: csex57/causeofdeath/.github/workflows/buildVue.yml
       with:
         username: 'csex57'
         reponame: 'causeofdeath'
-        token: ${{ secrets.GITHUB_TOKEN }} # Leave this line unchanged
+        token: ${{ secrets.GITHUB_TOKEN }}
+        base: 'causeofdeath'

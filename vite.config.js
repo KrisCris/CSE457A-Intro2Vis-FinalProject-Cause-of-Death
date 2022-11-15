@@ -4,11 +4,10 @@ import { createSvgIconsPlugin } from 'vite-plugin-svg-icons';
 import { resolve } from 'path';
 import dsv from '@rollup/plugin-dsv';
 
-export default ({ mode }) => {
+export default ({ ...mode }) => {
+  console.log(mode)
   return defineConfig({
-    base: mode === 'production'
-      ? '/causeofdeath/'
-      : '/',
+    base: '',
     plugins: [
       vue(),
       dsv(),
