@@ -133,7 +133,7 @@ const draw = async () => {
             <h4>{{ hover?.[1]}}</h4>
             <p>Year: {{ barState.year }}</p>
             <p>Death: {{ hover?.[0] }}</p>
-            <p>Death Percentage: {{ hover?.[2] }}</p>
+            <p>Death Percentage: {{ hover?.[2].toFixed(2) + "%"}}</p>
         </div>
     </Teleport>
 </template>
