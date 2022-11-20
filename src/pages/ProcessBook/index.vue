@@ -1,5 +1,5 @@
 <template>
-  <iframe src="../../../Documents/ProcessBook.html" frameborder="0"></iframe>
+  <iframe :src="'../../../Documents/ProcessBook.html'" frameborder="0"></iframe>
 </template>
 
 <style scoped lang="scss">
