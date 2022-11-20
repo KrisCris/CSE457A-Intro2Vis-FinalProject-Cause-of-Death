@@ -1,6 +1,7 @@
 <script setup>
 import { max } from 'd3-array';
-import { scaleBand, scaleLinear, scaleSqrt, scaleOrdinal } from 'd3-scale';
+import { axisLeft } from 'd3-axis';
+import { scaleBand, scaleSqrt, scaleOrdinal } from 'd3-scale';
 import { select } from 'd3-selection';
 import { stack } from 'd3-shape';
 import { ref, onMounted } from 'vue';
@@ -16,6 +17,9 @@ for (let i = 1990; i < 2020; i++) {
   years.push(i);
 }
 
+const leftBound = ref(1);
+const rightBound = ref(30);
+
 const hover = ref(null);
 
 const wrapper = ref();
@@ -30,7 +34,9 @@ for (let i = 0; i < reasons.length; ++i) {
 }
 
 const colorScale = scaleOrdinal(colorSet).domain(reasons);
+
 let barGrp = undefined;
+let axisGrp = undefined;
 
 onMounted(() => {
   const { width } = wrapper.value.getBoundingClientRect();
@@ -40,28 +46,37 @@ onMounted(() => {
 
 const onChangeYear = (year) => {
   stackState.setYear(year);
-  draw()
+  draw();
 }
 
 const draw = async () => {
   barGrp = barGrp || select(svg.value).append("g");
+  axisGrp = axisGrp || select(svg.value).append("g");
 
   const rawData = Object.values(stackState.getYearlyData());
+  console.log(rawData)
   rawData.sort((a, b) => b.total_death - a.total_death)
-  const countryNames = rawData.map(d => d.country_name)
+  const selectedData = rawData.slice(leftBound.value - 1, rightBound.value)
+  const countryNames = selectedData.map(d => d.country_name)
+  const eachHeight = 30;
+
+  stackState.height = eachHeight * countryNames.length;
 
   const y = scaleBand()
       .domain(countryNames)
-      .range([0, stackState.width * 3])
+      .range([0, eachHeight * countryNames.length])
       .padding([0.2])
-
+  const yAxis = axisLeft(y);
   const x = scaleSqrt()
-    .domain([0, max(rawData, d => d.total_death)])
-    .range([0, stackState.width - 100]);
+    .domain([0, max(selectedData, d => d.total_death)])
+    .range([0, stackState.width - 220]);
 
-  const data = stack().keys(stackState.getReasonNames())(rawData)
-  barGrp
-    .attr("transform", `translate(${50}, ${0})`)
+  const data = stack().keys(stackState.getReasonNames())(selectedData)
+  axisGrp
+    .call(yAxis)
+    .call(g => g.select('.domain').remove());
+  const rects = barGrp
+    .attr("transform", `translate(${170}, ${0})`)
     .selectAll("g")
     .data(data)
     .join("g")
@@ -71,6 +86,8 @@ const draw = async () => {
     .join(
       enter => enter
         .append("rect")
+        .transition()
+        .duration(200)
         .attr("x", d => {
           return x(d[0]);
         })
@@ -78,17 +95,19 @@ const draw = async () => {
           return y(d.data.country_name)
         })
         .attr("width", d  => x(d[1]) - x(d[0]))
-        .attr("height",y.bandwidth())
-        .on("mouseover", function (e, d) {
-          hover.value = {
-            cause: select(this.parentNode).data()[0].key,
-            detail: d.data
-          }
-          tooltip.value.style.top = `${e.clientY + 20}px`;
-          tooltip.value.style.left = `${e.clientX + 20}px`;
-        })
-        .on("mouseout", () => hover.value = null),
+        .attr("height",y.bandwidth()),
+        // .on("mouseover", function (e, d) {
+        //   hover.value = {
+        //     cause: select(this.parentNode).data()[0].key,
+        //     detail: d.data
+        //   }
+        //   tooltip.value.style.top = `${e.clientY + 20}px`;
+        //   tooltip.value.style.left = `${e.clientX + 20}px`;
+        // })
+        // .on("mouseout", () => hover.value = null),
       update => update
+        .transition()
+        .duration(200)
         .attr("x", d => {
           return x(d[0]);
         })
@@ -96,21 +115,29 @@ const draw = async () => {
           return y(d.data.country_name)
         })
         .attr("width", d  => x(d[1]) - x(d[0]))
-        .attr("height",y.bandwidth())
-        .on("mouseover", function (e, d) {
-          hover.value = {
-            cause: select(this.parentNode).data()[0].key,
-            detail: d.data
-          }
-          tooltip.value.style.top = `${e.clientY + 20}px`;
-          tooltip.value.style.left = `${e.clientX + 20}px`;
-        })
-        .on("mouseout", () => hover.value = null),
+        .attr("height",y.bandwidth()),
+        // .on("mouseover", function (e, d) {
+        //   hover.value = {
+        //     cause: select(this.parentNode).data()[0].key,
+        //     detail: d.data
+        //   }
+        //   tooltip.value.style.top = `${e.clientY + 20}px`;
+        //   tooltip.value.style.left = `${e.clientX + 20}px`;
+        // })
+        // .on("mouseout", () => hover.value = null),
       exit => exit.remove()
     )
+    rects
+      .on("mouseover", function (e, d) {
+          hover.value = {
+            cause: select(this.parentNode).data()[0].key,
+            detail: d.data
+          }
+          tooltip.value.style.top = `${e.clientY + 20}px`;
+          tooltip.value.style.left = `${e.clientX + 20}px`;
+        })
+      .on("mouseout", () => hover.value = null)
 }
-
-
 
 </script>
 
@@ -130,11 +157,20 @@ const draw = async () => {
         </div>
     </div>
 
+    <div>
+      <input type="range" id="left" name="left" v-model="leftBound"
+         :min="1" :max="Math.min(204, rightBound)" v-on:input="draw">
+      <label for="left">{{leftBound}}</label>
+      <input type="range" id="right" name="right" v-model="rightBound"
+         :min="Math.max(1, leftBound)" :max="204" v-on:input="draw">
+      <label for="right">{{rightBound}}</label>
+    </div>
+
     <div ref="wrapper">
         <svg
             ref="svg"
             :width="stackState.width"
-            :height="stackState.width * 3"
+            :height="stackState.height"
         ></svg>
     </div>
 
@@ -205,6 +241,7 @@ const draw = async () => {
 }
 
 .tooltip {
+  text-align: center;
   background-color: white;
   border-radius: 8px;
   position: absolute;
