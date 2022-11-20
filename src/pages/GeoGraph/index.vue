@@ -1,28 +1,42 @@
 <script setup>
 import Graph from './components/Graph.vue';
 import useWorldStore from '../../stores/world';
-import YearSelector from '../../components/YearSelector/index.vue';
+import YearSelector from '../../components/YearSelector.vue';
 
 const world = useWorldStore();
 
 </script>
 
 <template>
-  <YearSelector :default="world.year" @change="world.setYear"/>
-  <div class="selector-wrapper">
-    <div class="selector">
-      <p v-for="type in ['3D', '2D']"
-        :key="type"
-        :class="type === world.type ? 'active-type' : ''"
-        @click="world.setType(type)">
-        {{type}}
-      </p>
-    </div>
-  </div>
-  <Graph />
+  <main>
+    <YearSelector :default="world.year" @change="world.setYear"/>
+    <section>
+      <div class="selector-wrapper">
+        <div class="selector">
+          <p v-for="type in ['3D', '2D']"
+            :key="type"
+            :class="type === world.type ? 'active-type' : ''"
+            @click="world.setType(type)">
+            {{type}}
+          </p>
+        </div>
+      </div>
+      <Graph />
+    </section>
+  </main>
 </template>
 
 <style scoped lang="scss">
+main {
+  flex: 1;
+  display: flex;
+  overflow: auto;
+}
+
+section {
+  flex: 1;
+}
+
 .selector-wrapper {
   display: flex;
   justify-content: center;

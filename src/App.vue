@@ -31,9 +31,7 @@ const items = [
       </RouterLink>
     </div>
   </aside>
-  <main>
-    <RouterView/>
-  </main>
+  <RouterView/>
 </template>
 
 <style scoped lang="scss">
@@ -60,11 +58,6 @@ hr {
   margin: 0;
   border: none;
   border-bottom: 1px solid $text;
-}
-
-main {
-  flex: 1;
-  overflow: scroll;
 }
 
 .route {
