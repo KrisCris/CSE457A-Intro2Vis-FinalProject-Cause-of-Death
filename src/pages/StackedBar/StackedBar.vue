@@ -73,8 +73,8 @@ const draw = async () => {
 
   const data = stack().keys(stackState.getReasonNames())(selectedData)
   axisGrp
+    .attr("transform", `translate(${170}, ${0})`)
     .call(yAxis)
-    .call(g => g.select('.domain').remove());
   const rects = barGrp
     .attr("transform", `translate(${170}, ${0})`)
     .selectAll("g")
@@ -86,45 +86,27 @@ const draw = async () => {
     .join(
       enter => enter
         .append("rect")
+        .attr("y", d => {
+          return y(d.data.country_name)
+        })
         .transition()
         .duration(200)
         .attr("x", d => {
           return x(d[0]);
         })
-        .attr("y", d => {
-          return y(d.data.country_name)
-        })
         .attr("width", d  => x(d[1]) - x(d[0]))
         .attr("height",y.bandwidth()),
-        // .on("mouseover", function (e, d) {
-        //   hover.value = {
-        //     cause: select(this.parentNode).data()[0].key,
-        //     detail: d.data
-        //   }
-        //   tooltip.value.style.top = `${e.clientY + 20}px`;
-        //   tooltip.value.style.left = `${e.clientX + 20}px`;
-        // })
-        // .on("mouseout", () => hover.value = null),
       update => update
+        .attr("y", d => {
+          return y(d.data.country_name)
+        })
         .transition()
         .duration(200)
         .attr("x", d => {
           return x(d[0]);
         })
-        .attr("y", d => {
-          return y(d.data.country_name)
-        })
         .attr("width", d  => x(d[1]) - x(d[0]))
         .attr("height",y.bandwidth()),
-        // .on("mouseover", function (e, d) {
-        //   hover.value = {
-        //     cause: select(this.parentNode).data()[0].key,
-        //     detail: d.data
-        //   }
-        //   tooltip.value.style.top = `${e.clientY + 20}px`;
-        //   tooltip.value.style.left = `${e.clientX + 20}px`;
-        // })
-        // .on("mouseout", () => hover.value = null),
       exit => exit.remove()
     )
     rects
@@ -138,7 +120,6 @@ const draw = async () => {
         })
       .on("mouseout", () => hover.value = null)
 }
-
 </script>
 
 <template>
