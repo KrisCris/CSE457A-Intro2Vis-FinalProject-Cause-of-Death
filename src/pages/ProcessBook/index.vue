@@ -1,5 +1,9 @@
+<script setup>
+const src = `${import.meta.env.BASE_URL}Documents/ProcessBook.html`;
+</script>
+
 <template>
-  <iframe :src="'../../../Documents/ProcessBook.html'" frameborder="0"></iframe>
+  <iframe :src="src" frameborder="0"></iframe>
 </template>
 
 <style scoped lang="scss">
