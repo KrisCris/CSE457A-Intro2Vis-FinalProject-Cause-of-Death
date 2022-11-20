@@ -9,8 +9,8 @@ export default createRouter({
     },
     {
       // to be replaced
-      path: '/test-graph',
-      component: () => import('../pages/TestGraph/TestGraph.vue'),
+      path: '/stacked-bar',
+      component: () => import('../pages/StackedBar/StackedBar.vue'),
     },
     {
       path: '/process-book',
