@@ -13,6 +13,10 @@ export default createRouter({
       component: () => import('../pages/StackedBar/StackedBar.vue'),
     },
     {
+      path: '/process-book',
+      component: () => import('../pages/ProcessBook/index.vue'),
+    },
+    {
       path: '/about',
       component: () => import('../pages/About/index.vue'),
     },
