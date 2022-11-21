@@ -97,7 +97,7 @@ watchEffect(() => {
 
 const scaleColor = d => {
   const meta = world.data[d.properties.adm0_a3];
-  return world.colorScale(meta ? meta[meta.length - 1] : 1);
+  return world.colorScale(meta ? meta[2] / meta[1] : 0);
 };
 </script>
 
@@ -118,6 +118,7 @@ const scaleColor = d => {
             <path
               :d="world.pathGenerator(d)"
               :fill="scaleColor(d)"
+              stroke="gray"
               @mouseenter="onMouseEnter"
               @mouseleave="onMouseLeave"
             />

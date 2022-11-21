@@ -12,6 +12,7 @@ const world = useWorldStore();
     <YearSelector :default="world.year" @change="world.setYear"/>
     <section>
       <div class="selector-wrapper">
+        <h1 class="title">{{world.year}}</h1>
         <div class="selector">
           <p v-for="type in ['3D', '2D']"
             :key="type"
@@ -41,6 +42,17 @@ section {
   display: flex;
   justify-content: center;
   user-select: none;
+  position: relative;
+
+  .title {
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 3rem;
+    font-size: 3rem;
+
+  }
 
   .selector {
     display: flex;
