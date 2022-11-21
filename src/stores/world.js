@@ -8,17 +8,10 @@ import {
 // import world from '../assets/data/countries.json';
 import world from '../assets/data/custom.geo.json';
 import death from '../assets/data/test.json';
-import csv from '../assets/data/cause_of_deaths.csv';
+// import csv from '../assets/data/cause_of_deaths.csv';
+// import pop from '../assets/data/pppppppppopulation.csv';
 
-const projection = {
-  '3D': width => geoOrthographic()
-    .rotate([-15, -40])
-    .fitSize([width, width], world)
-    .translate([width / 2, width / 2]),
-  '2D': width => geoMercator()
-    .fitWidth(width, world)
-    .translate([width / 2, width / 2]),
-};
+// console.log('pop', pop);
 // const result = {};
 // const meta = new Array(32);
 // const tempMeta = {};
@@ -29,7 +22,7 @@ const projection = {
 //   tempMeta[key] = i;
 //   i++;
 // });
-// meta.push('sum');
+// meta.splice(1, 0, 'population', 'sum', 'percent');
 
 // csv.forEach((d, i) => {
 //   result[d.Year] = result[d.Year] || {};
@@ -55,6 +48,7 @@ const projection = {
 // // })
 // let all = 0;
 // let max = -Infinity;
+// let maxPercent = -Infinity;
 // for (const year in result) {
 //   if (year === 'meta') continue;
 //   let total = 0;
@@ -70,7 +64,20 @@ const projection = {
 //     if (sum > max) {
 //       max = sum;
 //     }
-//     arr.push(sum);
+//     let p = pop
+//       .find(e => e.Year === year && e['ISO3 Alpha-code'] === country)['Total Population, as of 1 January (thousands)']
+//       .replaceAll(' ', '');
+//     // console.log(p['Total Population, as of 1 January (thousands)']);
+//     if (!p) {
+//       console.log(year, country);
+//     } else {
+//       p = Number(p) * 1000;
+//     }
+//     const percent = sum / p;
+//     if (percent > maxPercent) {
+//       maxPercent = percent;
+//     }
+//     arr.splice(1, 0, p, sum, percent);
 //     total += sum;
 //   }
 //   result[year].sum = total;
@@ -78,13 +85,27 @@ const projection = {
 // }
 // result.sum = all;
 // result.max = max;
+// result.maxPercent = maxPercent;
+
 // console.log('result', result);
+
 // const blob = new Blob([JSON.stringify(result)], { type: 'application/json' });
 // const url = URL.createObjectURL(blob);
 // const a = document.createElement('a');
 // a.download = 'test.json';
 // a.href = url;
 // a.click();
+
+const projection = {
+  '3D': width => geoOrthographic()
+    .rotate([-15, -40])
+    .fitSize([width, width], world)
+    .translate([width / 2, width / 2]),
+  '2D': width => geoMercator()
+    .fitWidth(width, world)
+    .translate([width / 2, width / 2]),
+};
+
 export default defineStore('world', {
   state: () => ({
     type: '3D',
@@ -94,7 +115,7 @@ export default defineStore('world', {
     countries: null,
     data: death[1990],
     projection: null,
-    colorScale: scaleQuantile(schemeReds[9]).domain([0, death.max]),
+    colorScale: scaleQuantile(schemeReds[9]).domain([0, death.maxPercent]),
   }),
 
   actions: {

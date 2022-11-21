@@ -67,9 +67,14 @@ hr {
   padding: 1em 2em;
   display: flex;
   align-items: center;
+  transition: all .2s;
 
   p {
     margin: 0;
+  }
+
+  &:hover {
+    background-color: #2A2D2E;
   }
 }
 
@@ -81,6 +86,6 @@ hr {
 }
 
 .active-route {
-  background-color: #37373D;
+  background-color: #37373D !important;
 }
 </style>
