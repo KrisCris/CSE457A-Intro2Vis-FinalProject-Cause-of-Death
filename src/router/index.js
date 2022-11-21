@@ -13,6 +13,11 @@ export default createRouter({
       component: () => import('../pages/StackedBar/StackedBar.vue'),
     },
     {
+      // to be replaced
+      path: '/bar-chart',
+      component: () => import('../pages/BarChart/BarChart.vue'),
+    },
+    {
       path: '/process-book',
       component: () => import('../pages/ProcessBook/index.vue'),
     },
