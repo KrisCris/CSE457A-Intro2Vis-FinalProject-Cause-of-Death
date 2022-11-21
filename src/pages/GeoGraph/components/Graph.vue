@@ -5,11 +5,11 @@ import {
   watchEffect,
 } from 'vue';
 import {
-  zoom,
+  zoom as Zoom,
   select,
   zoomIdentity,
   pointer,
-  drag,
+  drag as Drag,
   zoomTransform,
 } from 'd3';
 import versor from 'versor';
@@ -21,35 +21,8 @@ const world = useWorldStore();
 const wrapper = ref();
 const svg = ref();
 const group = ref();
-const Zoom = zoom().scaleExtent([1, 8]);
-
-onMounted(() => {
-  const { width } = wrapper.value.getBoundingClientRect();
-  world.init(width - 100, group);
-  Zoom
-    .on('zoom', e => {
-      const { transform } = e;
-      select(group.value).attr('transform', transform);
-      // select(group.value).attr('stroke-width', 1 / transform.k);
-    });
-  select(svg.value)
-    .call(Zoom)
-    .on('mousedown.zoom', null);
-});
-
-// const test = (d, e) => {
-//   const [[x0, y0], [x1, y1]] = world.pathGenerator.bounds(d);
-//   e.stopPropagation();
-//   select(this).transition().style('fill', 'red');
-//   select(svg.value).transition().duration(750).call(
-//     Zoom.transform,
-//     zoomIdentity
-//       .translate(world.width / 2, world.width / 2)
-//       .scale(Math.min(8, 0.9 / Math.max((x1 - x0) / world.width, (y1 - y0) / world.width)))
-//       .translate(-(x0 + x1) / 2, -(y0 + y1) / 2),
-//     pointer(e, svg.value),
-//   );
-// };
+const zoom = Zoom().scaleExtent([1, 8]);
+const drag = Drag();
 
 let v0;
 let q0;
@@ -61,12 +34,6 @@ const dragStart = e => {
 };
 
 const dragging = e => {
-  // const rotate = world.projection.rotate();
-  // const k = 75 / world.projection.scale();
-  // world.projection.rotate([
-  //   rotate[0] + e.dx * k,
-  //   rotate[1] - e.dy * k,
-  // ]);
   const pt = pointer(e, svg.value);
   const v1 = versor.cartesian(world.projection.rotate(r0).invert(pt));
   const delta = versor.delta(v0, v1);
@@ -74,25 +41,38 @@ const dragging = e => {
 
   world.projection.rotate(versor.rotation(q1));
   world.newPathGenerator();
-  // path = d3.geoPath().projection(projection)
-  // svg.selectAll("path").attr("d", path)
 };
 
 const reset = () => {
   select(svg.value).transition().duration(750).call(
-    Zoom.transform,
+    zoom.transform,
     zoomIdentity,
     zoomTransform(svg.value).invert([world.width / 2, world.width / 2]),
   );
 };
 
-watchEffect(() => {
-  // console.log(world.type);
-  // reset();
-  select(svg.value)
-    .call(drag()
-      .on('start', world.type === '2D' ? null : dragStart)
-      .on('drag', world.type === '2D' ? null : dragging));
+onMounted(() => {
+  const { width } = wrapper.value.getBoundingClientRect();
+  world.init(width - 100);
+  zoom.on('zoom', e => {
+    const { transform } = e;
+    select(group.value).attr('transform', transform);
+  });
+  const selection = select(svg.value);
+
+  watchEffect(() => {
+    reset();
+    if (world.type === '3D') {
+      selection
+        .call(drag
+          .on('start', dragStart)
+          .on('drag', dragging))
+        .call(zoom)
+        .on('mousedown.zoom', null);
+    } else if (world.type === '2D') {
+      selection.call(zoom).call(drag);
+    }
+  });
 });
 
 const scaleColor = d => {
