@@ -1,7 +1,7 @@
 <script setup>
 import { select, axisLeft } from 'd3';
 import {
-  ref, onMounted, reactive,
+  ref, onMounted, reactive, watch,
 } from 'vue';
 import barChart from '../../stores/barChart';
 import YearSelector from '../../components/YearSelector.vue';
@@ -34,14 +34,14 @@ onMounted(() => {
 
   updateAxis();
 
-  bar.$subscribe(mutation => {
-    if (mutation.events.key === 'order') {
-      bar.orderData();
-      updateAxis();
-    } else if (mutation.events.key === 'data') {
-      updateAxis();
-    }
-  });
+  watch(
+    () => bar.order,
+    () => bar.orderData(),
+  );
+  watch(
+    () => bar.data,
+    () => updateAxis(),
+  );
 });
 </script>
 
