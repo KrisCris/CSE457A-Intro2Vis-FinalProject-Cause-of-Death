@@ -1,152 +1,121 @@
 <script setup>
-import { max } from 'd3-array';
-import { axisLeft } from 'd3-axis';
-import { scaleBand, scaleSqrt, scaleOrdinal } from 'd3-scale';
-import { select } from 'd3-selection';
-import { stack } from 'd3-shape';
-import { ref, onMounted } from 'vue';
+import {
+  ref, onMounted, reactive,
+} from 'vue';
 import stackStore from '../../stores/stack';
-import worldStore from '../../stores/world';
 import YearSelector from '../../components/YearSelector.vue';
+import Tooltip from '../../components/Tooltip.vue';
+import Legend from '../../components/Legend.vue';
 
-const stackState = stackStore();
-const worldState = worldStore();
-
-const years = [];
-
-for (let i = 1990; i < 2020; i++) {
-  years.push(i);
-}
-
-const leftBound = ref(1);
-const rightBound = ref(30);
-
-const hover = ref(null);
-
+const stack = stackStore();
 const wrapper = ref();
-const svg = ref();
-const tooltip = ref();
-
-const reasons = stackState.getReasonNames();
-
-const colorSet = [];
-for (let i = 0; i < reasons.length; ++i) {
-  colorSet.push(worldState.getRandomColor());
-}
-
-const colorScale = scaleOrdinal(colorSet).domain(reasons);
-
-let barGrp;
-let axisGrp;
+const size = reactive({
+  width: 0,
+  height: stack.base,
+});
 
 onMounted(() => {
   const { width } = wrapper.value.getBoundingClientRect();
-  stackState.init(width);
-  draw();
+  size.width = width;
+  stack.setXScale(width);
 });
+const containers = [];
 
-const onChangeYear = year => {
-  stackState.setYear(year);
-  draw();
+const main = ref();
+const header = ref();
+
+const isVisible = i => {
+  const offset = header.value?.getBoundingClientRect().height;
+  const upper = main.value?.scrollTop ?? 0;
+  const lower = upper + window.innerHeight;
+  const top = i * stack.base + offset;
+  const bottom = top + stack.base;
+
+  return (upper <= top && bottom <= lower)
+    || (top < upper && upper < bottom)
+    || (top < lower && lower < bottom);
 };
 
-const draw = async () => {
-  barGrp = barGrp || select(svg.value).append('g');
-  axisGrp = axisGrp || select(svg.value).append('g');
+const test = () => {
+  containers.forEach((div, i) => {
+    if (!div) return;
 
-  const rawData = Object.values(stackState.getYearlyData());
-  console.log(rawData);
-  rawData.sort((a, b) => b.total_death - a.total_death);
-  const selectedData = rawData.slice(leftBound.value - 1, rightBound.value);
-  const countryNames = selectedData.map(d => d.country_name);
-  const eachHeight = 30;
-
-  stackState.height = eachHeight * countryNames.length;
-
-  const y = scaleBand()
-    .domain(countryNames)
-    .range([0, eachHeight * countryNames.length])
-    .padding([0.2]);
-  const yAxis = axisLeft(y);
-  const x = scaleSqrt()
-    .domain([0, max(selectedData, d => d.total_death)])
-    .range([0, stackState.width - 220]);
-
-  const data = stack().keys(stackState.getReasonNames())(selectedData);
-  axisGrp
-    .attr('transform', `translate(${170}, ${0})`)
-    .call(yAxis);
-  const rects = barGrp
-    .attr('transform', `translate(${170}, ${0})`)
-    .selectAll('g')
-    .data(data)
-    .join('g')
-    .attr('fill', d => colorScale(d.key))
-    .selectAll('rect')
-    .data(d => d)
-    .join(
-      enter => enter
-        .append('rect')
-        .attr('y', d => y(d.data.country_name))
-        .transition()
-        .duration(200)
-        .attr('x', d => x(d[0]))
-        .attr('width', d => x(d[1]) - x(d[0]))
-        .attr('height', y.bandwidth()),
-      update => update
-        .attr('y', d => y(d.data.country_name))
-        .transition()
-        .duration(200)
-        .attr('x', d => x(d[0]))
-        .attr('width', d => x(d[1]) - x(d[0]))
-        .attr('height', y.bandwidth()),
-      exit => exit.remove(),
-    );
-  rects
-    .on('mouseover', function (e, d) {
-      hover.value = {
-        cause: select(this.parentNode).data()[0].key,
-        detail: d.data,
-      };
-      tooltip.value.style.top = `${e.clientY + 20}px`;
-      tooltip.value.style.left = `${e.clientX + 20}px`;
-    })
-    .on('mouseout', () => hover.value = null);
+    if (isVisible(i)) {
+      div.classList.remove('hidden');
+    } else {
+      div.classList.add('hidden');
+    }
+  });
 };
 </script>
 
 <template>
-  <main>
-    <YearSelector
-      :default="stackState.year"
-      @change="onChangeYear"
-    />
+  <main @scroll="test" ref="main">
+    <YearSelector :default="stack.year" @change="stack.setYear" />
     <section>
-      <div>
-        <input type="range" id="left" name="left" v-model="leftBound"
-          :min="1" :max="Math.min(204, rightBound)" v-on:input="draw">
-        <label for="left">{{leftBound}}</label>
-        <input type="range" id="right" name="right" v-model="rightBound"
-          :min="Math.max(1, leftBound)" :max="204" v-on:input="draw">
-        <label for="right">{{rightBound}}</label>
-      </div>
-
+      <header ref="header">
+        <div class="search-wrapper">
+          <input type="text" v-model="stack.search">
+          <button @click="stack.onSearch">Search</button>
+        </div>
+        <Legend/>
+      </header>
       <div ref="wrapper">
+        <div
+          class="container"
+          v-for="(country, i) in stack.data"
+          :key="country[0]"
+        >
           <svg
-              ref="svg"
-              :width="stackState.width"
-              :height="stackState.height"
-          ></svg>
+            :width="size.width"
+            :height="stack.base"
+            :class="[{
+              hidden: !isVisible(i),
+            }]"
+            :ref="el => containers[i] = el"
+          >
+              <text dominant-baseline="hanging">
+                {{country[1][0]}}
+              </text>
+              <text
+                dominant-baseline="hanging"
+                text-anchor="end"
+                fill="gray"
+                :x="size.width"
+              >
+                Total Death: {{country[1][2]}}
+              </text>
+              <Tooltip
+                v-for="d in stack.getStackedData(country[1])"
+                :key="d.key"
+              >
+                <template #target="{onMouseEnter, onMouseLeave}">
+                  <rect
+                    :fill="stack.scaleColor(d[0][1] - d[0][0])"
+                    stroke="white"
+                    :x="stack.x?.(d[0][0]) ?? 0"
+                    y="25"
+                    :width="stack.x?.(d[0][1] - d[0][0]) ?? 0"
+                    height="50"
+                    @mouseenter="onMouseEnter"
+                    @mouseleave="onMouseLeave"
+                  />
+                </template>
+                <template #content>
+                  <div class="tooltip-content">
+                    <h4>{{stack.meta[d.key]}}</h4>
+                    <p>Year: {{stack.year}}</p>
+                    <p>Population: {{country[1][1]}}</p>
+                    <p>Death: {{country[1][2]}}</p>
+                    <p>Death / Population: {{(country[1][3] * 100).toFixed(2)}}%</p>
+                    <p>Death / Total Death {{((d[0][1] - d[0][0]) * 100).toFixed(2)}}%</p>
+                  </div>
+                </template>
+              </Tooltip>
+          </svg>
+        </div>
       </div>
     </section>
-    <Teleport to="body">
-      <div ref="tooltip" v-show="hover" class="tooltip">
-        <h4>{{hover?.detail.country_name}}</h4>
-        <p>Year: {{stackState.year}}</p>
-        <p>Cause: {{hover?.cause}}</p>
-        <p>Death: {{hover?.detail[hover?.cause]}}</p>
-      </div>
-    </Teleport>
   </main>
 </template>
 
@@ -158,26 +127,69 @@ main {
 }
 
 section {
-  flex: 1
+  flex: 1;
+  padding-right: 2rem;
 }
 
-.tooltip {
-  text-align: center;
-  background-color: white;
-  border-radius: 8px;
-  position: absolute;
-  padding: 2rem;
-  box-shadow: 0 0 10px rgba(0, 0, 0, .25);
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+rect {
+  cursor: pointer;
+  transition: all .5s;
+}
 
-  h4, p {
-    margin: 0;
+.hidden {
+  display: none;
+}
+
+.container {
+  height: 100px;
+}
+
+.search-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem 0;
+
+  input {
+    box-sizing: border-box;
+    height: 2.5rem;
+    outline: none;
+    border: 1px solid #DCDFE6;
+    border-radius: 8px;
+    padding: 0 1rem;
+    font-size: 1rem;
+    transition: all .3s;
+
+    &:hover {
+      border-color: gray;
+    }
+
+    &:focus {
+      border-color: #409EFF;
+    }
   }
 
-  p {
-    color: gray;
+  button {
+    box-sizing: border-box;
+    height: 2.5rem;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    padding: 0 1rem;
+    font-size: 1rem;
+    transition: all .3s;
+    background-color: #409EFF;
+    color: white;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #79bbff;
+    }
+
+    &:active {
+      background-color: #337ecc;
+    }
   }
 }
 </style>

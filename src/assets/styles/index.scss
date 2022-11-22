@@ -8,3 +8,17 @@ body, html, #app {
 #app {
   display: flex;
 }
+
+.tooltip-content {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  h4, p {
+    margin: 0
+  }
+
+  p {
+    color: gray;
+  }
+}
