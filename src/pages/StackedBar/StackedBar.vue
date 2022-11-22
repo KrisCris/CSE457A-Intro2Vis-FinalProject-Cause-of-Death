@@ -106,7 +106,7 @@ const test = () => {
                     <h4>{{stack.meta[d.key]}}</h4>
                     <p>Year: {{stack.year}}</p>
                     <p>Population: {{country[1][1]}}</p>
-                    <p>Death: {{country[1][2]}}</p>
+                    <p>Death: {{country[1][d.key]}}</p>
                     <p>Death / Population: {{(country[1][3] * 100).toFixed(2)}}%</p>
                     <p>Death / Total Death {{((d[0][1] - d[0][0]) * 100).toFixed(2)}}%</p>
                   </div>
