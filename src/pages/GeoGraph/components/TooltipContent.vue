@@ -11,7 +11,7 @@ const data = world.data[props.code];
 </script>
 
 <template>
-  <div class="tooltip">
+  <div class="tooltip-content">
     <h4>{{data?.[0]}}</h4>
     <p>Year: {{world.year}}</p>
     <p>Population: {{data?.[1]}}</p>
@@ -20,17 +20,4 @@ const data = world.data[props.code];
 </template>
 
 <style scoped lang="scss">
-.tooltip {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-
-  h4, p {
-    margin: 0;
-  }
-
-  p {
-    color: gray;
-  }
-}
 </style>

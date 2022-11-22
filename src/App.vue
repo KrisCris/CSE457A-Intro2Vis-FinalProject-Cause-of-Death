@@ -1,9 +1,9 @@
 <script setup>
 const items = [
   { path: '/geo-graph', text: 'Geo Graph', icon: 'world' },
-  { path: '/stacked-bar', text: 'Stacked Bar', icon: 'stacked-bar' },
-  { path: '/process-book', text: 'Process Book', icon: 'book' },
+  { path: '/stacked-bar', text: 'Stacked Bar', icon: 'stack-bar' },
   { path: '/bar-chart', text: 'Bar Chart', icon: 'stacked-bar' },
+  { path: '/process-book', text: 'Process Book', icon: 'book' },
   { path: '/about', text: 'About', icon: 'about' },
 ];
 </script>

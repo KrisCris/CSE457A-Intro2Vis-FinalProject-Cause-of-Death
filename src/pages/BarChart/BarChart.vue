@@ -6,6 +6,7 @@ import {
 import barChart from '../../stores/barChart';
 import YearSelector from '../../components/YearSelector.vue';
 import Tooltip from '../../components/Tooltip.vue';
+import Legend from '../../components/Legend.vue';
 
 const bar = barChart();
 const wrapper = ref();
@@ -37,6 +38,8 @@ onMounted(() => {
     if (mutation.events.key === 'order') {
       bar.orderData();
       updateAxis();
+    } else if (mutation.events.key === 'data') {
+      updateAxis();
     }
   });
 });
@@ -49,24 +52,26 @@ onMounted(() => {
       @change="bar.setYear"
     />
     <section>
-      <div class="order-wrapper">
-        <template
-          v-for="order in ['unordered', 'descending', 'ascending']"
-          :key="order"
-        >
-          <input
-            type="radio"
-            name="order"
-            :value="order"
-            v-model="bar.order"
-            :id="order"
+      <header>
+        <Legend/>
+        <div class="order-wrapper">
+          <template
+            v-for="order in ['unordered', 'descending', 'ascending']"
+            :key="order"
           >
-          <label :for="order">{{order}}</label>
-        </template>
-      </div>
+            <input
+              type="radio"
+              name="order"
+              :value="order"
+              v-model="bar.order"
+              :id="order"
+            >
+            <label :for="order">{{order}}</label>
+          </template>
+        </div>
+      </header>
       <div ref="wrapper">
         <svg
-          ref="svg"
           :width="size.width"
           :height="size.height"
         >
@@ -113,9 +118,14 @@ section {
   flex: 1;
 }
 
+header {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+}
+
 .order-wrapper {
   display: flex;
-  justify-content: flex-end;
   padding: 2rem;
   gap: 1rem;
 
@@ -140,19 +150,5 @@ section {
 rect {
   transition: all .5s;
   cursor: pointer;
-}
-
-.tooltip-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-
-  h4, p {
-    margin: 0
-  }
-
-  p {
-    color: gray;
-  }
 }
 </style>
