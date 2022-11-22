@@ -89,4 +89,25 @@ hr {
 .active-route {
   background-color: #37373D !important;
 }
+
+::-webkit-scrollbar-track
+{
+  box-shadow: inset 0 0 6px #00000050;
+	-webkit-box-shadow: inset 0 0 6px #00000050;
+	background-color: #353841b7;
+}
+
+::-webkit-scrollbar
+{
+	width: 0.5rem;
+	background-color: #ffffff50;
+}
+
+::-webkit-scrollbar-thumb
+{
+    box-shadow: inset 0 0 6px #00000050;
+	border-radius: 0.5rem;
+	-webkit-box-shadow: inset 0 0 6px #00000050;
+	background-color: #1d1d22a8;
+}
 </style>
