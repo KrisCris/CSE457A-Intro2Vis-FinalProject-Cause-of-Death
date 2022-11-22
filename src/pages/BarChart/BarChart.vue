@@ -24,12 +24,14 @@ onMounted(() => {
   const yAxis = axisLeft(bar.y);
   const axisSelection = select(axisGroup.value);
 
-  watchEffect(() => {
-    bar.orderData();
-    axisSelection
-      .transition()
-      .duration(500)
-      .call(yAxis);
+  bar.$subscribe(mutation => {
+    if (mutation.events.key === 'order') {
+      bar.orderData();
+      axisSelection
+        .transition()
+        .duration(500)
+        .call(yAxis);
+    }
   });
 });
 </script>

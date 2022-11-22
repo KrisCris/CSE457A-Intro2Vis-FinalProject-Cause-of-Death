@@ -20,5 +20,6 @@ module.exports = {
     'no-plusplus': 'off',
     'arrow-parens': ['error', 'as-needed'],
     'no-return-assign': 'off',
+    'no-unused-expressions': 'off',
   },
 };
