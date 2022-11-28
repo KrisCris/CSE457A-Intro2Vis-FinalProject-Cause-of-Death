@@ -61,10 +61,16 @@ const test = () => {
         <Legend/>
       </header>
       <div ref="wrapper">
-        <p class="stories">Overall, the total number of deaths in most countries shows an upward trend with each year. 
-          This roughly stems from the rise in world population, which is predictable. Each country shows different percentages of death reasons while Cardiovascular Diseases and Neoplasms remain the leading causes of death in the majority of countries. 
-          Some countries do not have very high threat level death reasons, only some relatively high threat death reasons, while some countries have much more serious death reasons. 
-          This may be closely related to each country's situation, people's diet, climate, and other factors.
+        <p :class="{'stories':true, 'stories-expand': stack.isExpand}" @click="stack.onStoryClick">
+          <span>
+            This graph shows the total number of deaths and the percentage of different death reasons for each country.
+          </span><br><br>
+          <span>
+            Overall, the total number of deaths in most countries shows an upward trend with each year. 
+            This roughly stems from the rise in world population, which is predictable. Each country shows different percentages of death reasons while Cardiovascular Diseases and Neoplasms remain the leading causes of death in the majority of countries. 
+            Some countries do not have very high threat level death reasons, only some relatively high threat death reasons, while some countries have much more serious death reasons. 
+            This may be closely related to each country's situation, people's diet, climate, and other factors.
+          </span>
         </p>
         <div
           class="container"
@@ -128,9 +134,19 @@ const test = () => {
 p.stories {
   margin:0px;
   margin-bottom: 1.5rem;
-  background-color:#99D594;
+  background-color:#b9eab5;
+  color: #3e8639;
   padding: 1rem 1.5rem;;
   border-radius: 1rem;
+  max-height: 1rem;
+  transition: max-height 0.5s ease-out;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+p.stories-expand {
+  max-height: 100vh;
+  transition: max-height 0.5s ease-in;
 }
 
 main {

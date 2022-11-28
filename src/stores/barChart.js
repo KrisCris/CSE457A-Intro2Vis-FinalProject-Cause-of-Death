@@ -26,6 +26,7 @@ export default defineStore('barChart', {
       x: null,
       data: Object.values(data),
       order: 'unordered',
+      isExpand: false
     };
   },
 
@@ -69,5 +70,8 @@ export default defineStore('barChart', {
       this.y.domain(data.map(d => d[1]));
       this.data = data;
     },
+    onStoryClick() {
+      this.isExpand = !this.isExpand;
+    }
   },
 });

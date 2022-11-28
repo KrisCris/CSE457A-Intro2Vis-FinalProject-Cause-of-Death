@@ -34,6 +34,7 @@ export default defineStore('stack', {
       base,
       x: null,
       search: '',
+      isExpand: false
     };
   },
 
@@ -73,5 +74,8 @@ export default defineStore('stack', {
     //   this.data = getCountries(this.year)
     //     .filter(d => new RegExp(this.search, 'i').test(d[1][0]));
     // },
+    onStoryClick() {
+      this.isExpand = !this.isExpand;
+    }
   },
 });
