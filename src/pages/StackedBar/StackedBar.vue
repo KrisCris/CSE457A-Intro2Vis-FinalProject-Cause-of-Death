@@ -54,13 +54,6 @@ const test = () => {
     <YearSelector :default="stack.year" @change="stack.setYear" />
     <section>
       <header ref="header">
-        <div class="legend-and-search-wrapper">
-          <Legend/>
-          <div class="search-wrapper">
-            <input type="text" v-model="stack.search">
-            <button @click="stack.updateData">Search</button>
-          </div>
-        </div>
         <Story>
           <template #title>
             This graph shows the total number of deaths and the percentage of different death reasons for each country.
@@ -72,6 +65,13 @@ const test = () => {
             This may be closely related to each country's situation, people's diet, climate, and other factors.
           </template>
         </Story>
+        <div class="legend-and-search-wrapper">
+          <Legend/>
+          <form class="search-wrapper" @submit="stack.updateData">
+            <input type="text" v-model="stack.search">
+            <button>Search</button>
+          </form>
+        </div>
       </header>
       <div ref="wrapper">
         <div
@@ -145,6 +145,13 @@ section {
   padding-right: 2rem;
 }
 
+header {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 0;
+  gap: 2rem;
+}
+
 .legend-and-search-wrapper {
   display: flex;
   justify-content: space-between;
@@ -169,7 +176,6 @@ rect {
   justify-content: center;
   align-items: center;
   gap: 1rem;
-  padding: 1.5rem 0;
 
   input {
     box-sizing: border-box;
