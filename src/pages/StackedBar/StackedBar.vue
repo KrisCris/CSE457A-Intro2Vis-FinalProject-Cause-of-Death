@@ -40,11 +40,11 @@ onMounted(() => {
   const { width } = wrapper.value.getBoundingClientRect();
   size.width = width;
   stack.setXScale(width);
-  toggleVisibleData();
 
   watch(
     () => stack.data,
-    () => toggleVisibleData(),
+    toggleVisibleData,
+    { immediate: true },
   );
 });
 
