@@ -71,6 +71,7 @@ onMounted(() => {
         </div>
       </header>
       <div ref="wrapper">
+        <p class="stories">Placeholder</p>
         <svg
           :width="size.width"
           :height="size.height"
@@ -108,6 +109,13 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
+p.stories {
+  margin: -1rem 2rem 1.5rem 0px;
+  background-color:#99D594;
+  padding: 1rem 1.5rem;
+  border-radius: 1rem;
+}
+
 main {
   flex: 1;
   overflow: auto;
