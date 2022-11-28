@@ -5,6 +5,20 @@ import YearSelector from '../../components/YearSelector.vue';
 
 const world = useWorldStore();
 
+const format = (key, value) => {
+  if (key === 'sum') {
+    key = 'Total Death';
+  } else if (key === 'percent') {
+    key = 'Total Death / Population';
+    value = `${(value * 100).toFixed(2)}%`;
+  }
+  return `${key}: ${value}`;
+};
+
+const onClose = () => {
+  world.open = false;
+};
+
 </script>
 
 <template>
@@ -24,6 +38,19 @@ const world = useWorldStore();
       </div>
       <Graph />
     </section>
+    <div class="detail" v-show="world.open">
+      <div class="close-wrapper">
+        <icon name="close" class="close" fill="white" :click="onClose"/>
+      </div>
+      <div class="content-wrapper">
+        <p
+          v-for="(item, i) in world.click"
+          :key="i"
+        >
+          {{format(world.meta[i], item)}}
+        </p>
+      </div>
+    </div>
   </main>
 </template>
 
@@ -71,6 +98,42 @@ section {
   .active-type {
     color: white;
     background-color: #409EFF;
+  }
+}
+
+.detail {
+  position: fixed;
+  top: 1rem;
+  right: 1rem;
+  border-radius: 8px;
+  background-color: rgba(0, 0, 0, .8);
+  color: white;
+  text-transform: capitalize;
+  width: 30rem;
+  overflow: hidden;
+
+  p {
+    margin: 0;
+  }
+
+  .close-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 1rem 1rem 0 0;
+
+    .close {
+      cursor: pointer;
+    }
+  }
+
+  .content-wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    overflow: auto;
+    height: 20rem;
+    padding: 0 2rem 2rem;
   }
 }
 </style>

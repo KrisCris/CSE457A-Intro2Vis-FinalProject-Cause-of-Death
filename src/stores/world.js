@@ -116,6 +116,9 @@ export default defineStore('world', {
     data: death[1990],
     projection: null,
     colorScale: scaleQuantile(schemeReds[9]).domain([0, death.maxPercent]),
+    meta: death.meta,
+    click: null,
+    open: false,
   }),
 
   actions: {
@@ -147,6 +150,10 @@ export default defineStore('world', {
     },
     newPathGenerator() {
       this.pathGenerator = geoPath(this.projection);
+    },
+    setClick(code) {
+      this.click = this.data[code];
+      this.open = true;
     },
   },
 });
