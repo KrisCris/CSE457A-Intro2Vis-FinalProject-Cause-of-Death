@@ -34,7 +34,6 @@ export default defineStore('stack', {
       base,
       x: null,
       search: '',
-      containers: [],
     };
   },
 
