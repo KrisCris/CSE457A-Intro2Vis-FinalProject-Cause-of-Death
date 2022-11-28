@@ -25,7 +25,8 @@ const gap = 40;
 </script>
 
 <template>
-  <svg :height="gap * (years.length + 1)">
+  <div>
+    <svg :height="gap * (years.length + 1)">
     <path :d="`M30 ${gap} V${years.length * gap}`"/>
     <g
       v-for="(year, i) in years"
@@ -40,9 +41,13 @@ const gap = 40;
       </text>
     </g>
   </svg>
+  </div>
 </template>
 
 <style scoped lang="scss">
+div {
+  overflow-y: auto;
+}
 svg {
   width: 8rem;
 }

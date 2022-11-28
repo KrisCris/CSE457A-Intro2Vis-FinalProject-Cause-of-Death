@@ -139,6 +139,7 @@ main {
 
 section {
   flex: 1;
+  overflow-y: auto;
 }
 
 header {

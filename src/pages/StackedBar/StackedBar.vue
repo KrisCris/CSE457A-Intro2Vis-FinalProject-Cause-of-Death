@@ -127,6 +127,7 @@ main {
 
 section {
   flex: 1;
+  overflow-y: auto;
 }
 
 header {
@@ -147,7 +148,7 @@ rect {
 }
 
 .container {
-  height: 1050px;
+  height: calc(100vh - 10rem);
 }
 
 .search-wrapper {
