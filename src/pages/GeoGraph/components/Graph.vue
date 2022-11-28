@@ -11,7 +11,7 @@ import {
   pointer,
   drag as Drag,
   zoomTransform,
-} from 'd3';
+} from 'd3';``
 import versor from 'versor';
 import useWorldStore from '../../../stores/world';
 import Tooltip from '../../../components/Tooltip.vue';
