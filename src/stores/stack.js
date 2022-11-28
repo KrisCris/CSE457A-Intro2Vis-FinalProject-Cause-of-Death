@@ -50,10 +50,10 @@ export default defineStore('stack', {
     },
     updateData() {
       this.containers = [];
+      const regexp = new RegExp(this.search, 'i');
       this.data = Object
         .entries(causes[this.year])
-        .filter(d => d[0] !== 'sum' && new RegExp(this.search, 'i')
-          .test(d[1][0]));
+        .filter(d => d[0] !== 'sum' && regexp.test(d[1][0]));
     },
     getStackedData(data) {
       return stack([data]);

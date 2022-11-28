@@ -56,10 +56,10 @@ const test = () => {
       <header ref="header">
         <div class="legend-and-search-wrapper">
           <Legend/>
-          <div class="search-wrapper">
+          <form class="search-wrapper" @submit="stack.updateData">
             <input type="text" v-model="stack.search">
-            <button @click="stack.updateData">Search</button>
-          </div>
+            <button>Search</button>
+          </form>
         </div>
         <Story>
           <template #title>

@@ -20,13 +20,12 @@ const expand = ref(false);
 
 <style scoped lang="scss">
 div {
-  margin:0px;
-  margin-bottom: 1.5rem;
+  margin: 0 0 1.5rem 0;
   background-color:#b9eab5;
   color: #3e8639;
-  border-radius: 1rem;
+  border-radius: 8px;
   max-height: 3rem;
-  transition: all .4s ease-in-out;
+  transition: all .45s ease-in-out;
   overflow: hidden;
   cursor: pointer;
 }

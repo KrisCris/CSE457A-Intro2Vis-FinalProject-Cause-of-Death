@@ -125,18 +125,18 @@ main {
 
 section {
   flex: 1;
+  padding-right: 2rem;
 }
 
 header {
   display: flex;
   justify-content: space-between;
-  align-content: center;
   align-items: center;
+  padding: 1rem 0;
 }
 
 .order-wrapper {
   display: flex;
-  padding: 1rem;
   gap: 1rem;
 
   label {
