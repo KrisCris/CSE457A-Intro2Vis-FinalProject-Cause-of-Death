@@ -16,7 +16,7 @@ const size = reactive({
 
 onMounted(() => {
   const { width } = wrapper.value.getBoundingClientRect();
-  size.width = width;
+  size.width = width - 2 * parseFloat(getComputedStyle(document.documentElement).fontSize);
   stack.setXScale(width);
 });
 </script>
@@ -103,8 +103,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 p.stories {
-  margin:0px;
-  margin-bottom: 1.5rem;
+  margin: 0rem 2rem 1.5rem 0px;
   background-color:#b9eab5;
   color: #3e8639;
   padding: 1rem 1.5rem;;
@@ -128,7 +127,6 @@ main {
 
 section {
   flex: 1;
-  padding-right: 2rem;
 }
 
 header {
