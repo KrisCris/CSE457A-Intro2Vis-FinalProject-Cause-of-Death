@@ -101,6 +101,7 @@ const scaleColor = d => {
               stroke="gray"
               @mouseenter="onMouseEnter"
               @mouseleave="onMouseLeave"
+              @click="world.setClick(d.properties.adm0_a3)"
             />
           </template>
           <template #content>

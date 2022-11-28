@@ -23,13 +23,22 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  click: {
+    type: Function,
+  },
 });
 
 const symbolId = computed(() => `#${props.prefix}-${props.name}`);
 </script>
 
 <template>
-  <svg aria-hidden="true" :width="props.size" :height="props.size" :class="props.class">
+  <svg
+    aria-hidden="true"
+    :width="props.size"
+    :height="props.size"
+    :class="props.class"
+    @click="props.click"
+  >
     <use :xlink:href="symbolId" :fill="props.fill" />
   </svg>
 </template>
