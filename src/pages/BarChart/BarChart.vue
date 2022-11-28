@@ -71,7 +71,11 @@ onMounted(() => {
         </div>
       </header>
       <div ref="wrapper">
-        <p class="stories">Placeholder</p>
+        <p class="stories">Overall, deaths caused by man-made or natural disaster factors are much less than those caused by disease. Cardiovascular Diseases and Neoplasms caused the most death in all years. 
+          Lower Respiratory Infections and Chronic Respiratory Diseases also caused a lot of death these years. 
+          Digestive Diseases should be equally given attention. Additionally, 'Diabetes Mellitus' and 'Alzheimer's Disease and Other Dementias' 's ranking has risen year by year, 
+          from both outside the top 15 at the beginning of 1990 to within 10 in 2019. Optimistically, however, we are seeing a gradual decline in the proportion of deaths accounted for by other causes of death besides Cardiovascular Diseases and Neoplasms. 
+          This shows the advancement of modern medicine and the importance people place on most causes of death. For humans now, we urgently need to find a cure for Cardiovascular Diseases and Neoplasms.</p>
         <svg
           :width="size.width"
           :height="size.height"

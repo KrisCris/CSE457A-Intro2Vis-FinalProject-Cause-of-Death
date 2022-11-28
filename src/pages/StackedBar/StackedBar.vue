@@ -61,7 +61,11 @@ const test = () => {
         <Legend/>
       </header>
       <div ref="wrapper">
-        <p class="stories">Placeholder</p>
+        <p class="stories">Overall, the total number of deaths in most countries shows an upward trend with each year. 
+          This roughly stems from the rise in world population, which is predictable. Each country shows different percentages of death reasons while Cardiovascular Diseases and Neoplasms remain the leading causes of death in the majority of countries. 
+          Some countries do not have very high threat level death reasons, only some relatively high threat death reasons, while some countries have much more serious death reasons. 
+          This may be closely related to each country's situation, people's diet, climate, and other factors.
+        </p>
         <div
           class="container"
           v-for="(country, i) in stack.data"
