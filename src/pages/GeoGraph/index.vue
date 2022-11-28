@@ -1,5 +1,4 @@
 <script setup>
-import { ref } from 'vue';
 import Graph from './components/Graph.vue';
 import useWorldStore from '../../stores/world';
 import YearSelector from '../../components/YearSelector.vue';
@@ -19,8 +18,6 @@ const format = (key, value) => {
 const onClose = () => {
   world.open = false;
 };
-
-const animateClose = ref(false);
 
 </script>
 
