@@ -19,34 +19,6 @@ onMounted(() => {
   size.width = width;
   stack.setXScale(width);
 });
-const containers = [];
-
-const main = ref();
-const header = ref();
-
-const isVisible = i => {
-  const offset = header.value?.getBoundingClientRect().height;
-  const upper = main.value?.scrollTop ?? 0;
-  const lower = upper + window.innerHeight;
-  const top = i * stack.base + offset;
-  const bottom = top + stack.base;
-
-  return (upper <= top && bottom <= lower)
-    || (top < upper && upper < bottom)
-    || (top < lower && lower < bottom);
-};
-
-const test = () => {
-  containers.forEach((div, i) => {
-    if (!div) return;
-
-    if (isVisible(i)) {
-      div.classList.remove('hidden');
-    } else {
-      div.classList.add('hidden');
-    }
-  });
-};
 </script>
 
 <template>
@@ -72,21 +44,20 @@ const test = () => {
             This may be closely related to each country's situation, people's diet, climate, and other factors.
           </span>
         </p>
-        <div
+        <RecycleScroller
           class="container"
-          v-for="(country, i) in stack.data"
-          :key="country[0]"
+          :items="stack.data"
+          key-field="0"
+          :item-size="stack.base"
+
+          v-slot="{ item }"
         >
           <svg
             :width="size.width"
             :height="stack.base"
-            :class="[{
-              hidden: !isVisible(i),
-            }]"
-            :ref="el => containers[i] = el"
           >
               <text dominant-baseline="hanging">
-                {{country[1][0]}}
+                {{item[1][0]}}
               </text>
               <text
                 dominant-baseline="hanging"
@@ -94,10 +65,10 @@ const test = () => {
                 fill="gray"
                 :x="size.width"
               >
-                Total Death: {{country[1][2]}}
+                Total Death: {{item[1][2]}}
               </text>
               <Tooltip
-                v-for="d in stack.getStackedData(country[1])"
+                v-for="d in stack.getStackedData(item[1])"
                 :key="d.key"
               >
                 <template #target="{onMouseEnter, onMouseLeave}">
@@ -116,15 +87,15 @@ const test = () => {
                   <div class="tooltip-content">
                     <h4>{{stack.meta[d.key]}}</h4>
                     <p>Year: {{stack.year}}</p>
-                    <p>Population: {{country[1][1]}}</p>
-                    <p>Death: {{country[1][d.key]}}</p>
-                    <p>Death / Population: {{(country[1][3] * 100).toFixed(2)}}%</p>
+                    <p>Population: {{item[1][1]}}</p>
+                    <p>Death: {{item[1][d.key]}}</p>
+                    <p>Death / Population: {{(item[1][3] * 100).toFixed(2)}}%</p>
                     <p>Death / Total Death {{((d[0][1] - d[0][0]) * 100).toFixed(2)}}%</p>
                   </div>
                 </template>
               </Tooltip>
           </svg>
-        </div>
+        </RecycleScroller>
       </div>
     </section>
   </main>
@@ -165,6 +136,7 @@ header {
   justify-content: space-between;
   align-content: center;
   align-items: center;
+  margin-right: 2rem;
 }
 
 rect {
@@ -177,7 +149,7 @@ rect {
 }
 
 .container {
-  height: 100px;
+  height: 1050px;
 }
 
 .search-wrapper {
