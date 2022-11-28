@@ -9,6 +9,10 @@ body, html, #app {
   display: flex;
 }
 
+:root {
+  font-size: 16px;
+}
+
 .tooltip-content {
   display: flex;
   flex-direction: column;
