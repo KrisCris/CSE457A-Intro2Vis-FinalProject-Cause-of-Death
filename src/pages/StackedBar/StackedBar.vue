@@ -54,11 +54,11 @@ const test = () => {
     <YearSelector :default="stack.year" @change="stack.setYear" />
     <section>
       <header ref="header">
+        <Legend/>
         <div class="search-wrapper">
           <input type="text" v-model="stack.search">
           <button @click="stack.updateData">Search</button>
         </div>
-        <Legend/>
       </header>
       <div ref="wrapper">
         <p :class="{'stories':true, 'stories-expand': stack.isExpand}" @click="stack.onStoryClick">
@@ -158,6 +158,13 @@ main {
 section {
   flex: 1;
   padding-right: 2rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
 }
 
 rect {

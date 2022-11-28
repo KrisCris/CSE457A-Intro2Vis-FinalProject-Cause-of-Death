@@ -115,7 +115,7 @@ onMounted(() => {
 
 <style scoped lang="scss">
 p.stories {
-  margin: -1rem 2rem 1.5rem 0px;
+  margin: 0rem 2rem 1.5rem 0px;
   background-color:#b9eab5;
   color: #3e8639;
   padding: 1rem 1.5rem;
@@ -145,11 +145,12 @@ header {
   display: flex;
   justify-content: space-between;
   align-content: center;
+  align-items: center;
 }
 
 .order-wrapper {
   display: flex;
-  padding: 2rem;
+  padding: 1rem;
   gap: 1rem;
 
   label {

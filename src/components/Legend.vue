@@ -15,7 +15,7 @@
   display: flex;
   align-items: center;
   gap: 1rem;
-  padding: 1rem 0 2rem 0;
+  padding: 1rem 0 1rem 0;
 
   div {
     width: 1.5rem;
