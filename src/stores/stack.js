@@ -34,7 +34,7 @@ export default defineStore('stack', {
       base,
       x: null,
       search: '',
-      isExpand: false
+      containers: [],
     };
   },
 
@@ -49,11 +49,11 @@ export default defineStore('stack', {
       this.updateData();
     },
     updateData() {
-      this.data = getCountries(this.year);
-      if (this.search) {
-        this.data = this.data
-        .filter(d => new RegExp(this.search, 'i').test(d[1][0]));
-      }
+      this.containers = [];
+      this.data = Object
+        .entries(causes[this.year])
+        .filter(d => d[0] !== 'sum' && new RegExp(this.search, 'i')
+          .test(d[1][0]));
     },
     getStackedData(data) {
       return stack([data]);
@@ -70,12 +70,5 @@ export default defineStore('stack', {
       }
       return '#D53E4F';
     },
-    // onSearch() {
-    //   this.data = getCountries(this.year)
-    //     .filter(d => new RegExp(this.search, 'i').test(d[1][0]));
-    // },
-    onStoryClick() {
-      this.isExpand = !this.isExpand;
-    }
   },
 });

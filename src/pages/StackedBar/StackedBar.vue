@@ -6,6 +6,7 @@ import stackStore from '../../stores/stack';
 import YearSelector from '../../components/YearSelector.vue';
 import Tooltip from '../../components/Tooltip.vue';
 import Legend from '../../components/Legend.vue';
+import Story from '../../components/Story.vue';
 
 const stack = stackStore();
 const wrapper = ref();
@@ -19,7 +20,6 @@ onMounted(() => {
   size.width = width;
   stack.setXScale(width);
 });
-const containers = [];
 
 const main = ref();
 const header = ref();
@@ -37,7 +37,7 @@ const isVisible = i => {
 };
 
 const test = () => {
-  containers.forEach((div, i) => {
+  stack.containers.forEach((div, i) => {
     if (!div) return;
 
     if (isVisible(i)) {
@@ -54,24 +54,26 @@ const test = () => {
     <YearSelector :default="stack.year" @change="stack.setYear" />
     <section>
       <header ref="header">
-        <Legend/>
-        <div class="search-wrapper">
-          <input type="text" v-model="stack.search">
-          <button @click="stack.updateData">Search</button>
+        <div class="legend-and-search-wrapper">
+          <Legend/>
+          <div class="search-wrapper">
+            <input type="text" v-model="stack.search">
+            <button @click="stack.updateData">Search</button>
+          </div>
         </div>
+        <Story>
+          <template #title>
+            This graph shows the total number of deaths and the percentage of different death reasons for each country.
+          </template>
+          <template #content>
+            Overall, the total number of deaths in most countries shows an upward trend with each year.
+            This roughly stems from the rise in world population, which is predictable. Each country shows different percentages of death reasons while Cardiovascular Diseases and Neoplasms remain the leading causes of death in the majority of countries.
+            Some countries do not have very high threat level death reasons, only some relatively high threat death reasons, while some countries have much more serious death reasons.
+            This may be closely related to each country's situation, people's diet, climate, and other factors.
+          </template>
+        </Story>
       </header>
       <div ref="wrapper">
-        <p :class="{'stories':true, 'stories-expand': stack.isExpand}" @click="stack.onStoryClick">
-          <span>
-            This graph shows the total number of deaths and the percentage of different death reasons for each country.
-          </span><br><br>
-          <span>
-            Overall, the total number of deaths in most countries shows an upward trend with each year. 
-            This roughly stems from the rise in world population, which is predictable. Each country shows different percentages of death reasons while Cardiovascular Diseases and Neoplasms remain the leading causes of death in the majority of countries. 
-            Some countries do not have very high threat level death reasons, only some relatively high threat death reasons, while some countries have much more serious death reasons. 
-            This may be closely related to each country's situation, people's diet, climate, and other factors.
-          </span>
-        </p>
         <div
           class="container"
           v-for="(country, i) in stack.data"
@@ -83,7 +85,7 @@ const test = () => {
             :class="[{
               hidden: !isVisible(i),
             }]"
-            :ref="el => containers[i] = el"
+            :ref="el => stack.containers[i] = el"
           >
               <text dominant-baseline="hanging">
                 {{country[1][0]}}
@@ -131,23 +133,6 @@ const test = () => {
 </template>
 
 <style scoped lang="scss">
-p.stories {
-  margin:0px;
-  margin-bottom: 1.5rem;
-  background-color:#b9eab5;
-  color: #3e8639;
-  padding: 1rem 1.5rem;;
-  border-radius: 1rem;
-  max-height: 1rem;
-  transition: max-height 0.5s ease-out;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-p.stories-expand {
-  max-height: 100vh;
-  transition: max-height 0.5s ease-in;
-}
 
 main {
   flex: 1;
@@ -160,10 +145,9 @@ section {
   padding-right: 2rem;
 }
 
-header {
+.legend-and-search-wrapper {
   display: flex;
   justify-content: space-between;
-  align-content: center;
   align-items: center;
 }
 
