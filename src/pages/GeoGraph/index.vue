@@ -16,7 +16,7 @@ const format = (key, value) => {
 };
 
 const onClose = () => {
-  world.open = false;
+  world.click = null;
 };
 
 </script>
@@ -39,13 +39,13 @@ const onClose = () => {
       <Graph />
     </section>
     <Transition name="bounce">
-      <div v-show="world.open" class="detail">
+      <div v-show="world.click" class="detail">
         <div class="close-wrapper">
           <icon name="close" class="close" fill="white" :click="onClose"/>
         </div>
         <div class="content-wrapper">
           <p
-            v-for="(item, i) in world.click"
+            v-for="(item, i) in world.data[world.click]"
             :key="i"
           >
             {{format(world.meta[i], item)}}

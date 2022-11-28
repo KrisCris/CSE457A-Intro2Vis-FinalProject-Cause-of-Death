@@ -118,18 +118,9 @@ export default defineStore('world', {
     colorScale: scaleQuantile(schemeReds[9]).domain([0, death.maxPercent]),
     meta: death.meta,
     click: null,
-    open: false,
   }),
 
   actions: {
-    getRandomColor: () => {
-      const letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random() * 16)];
-      }
-      return color;
-    },
     setType(type) {
       if (this.type === type) {
         return;
@@ -152,8 +143,7 @@ export default defineStore('world', {
       this.pathGenerator = geoPath(this.projection);
     },
     setClick(code) {
-      this.click = this.data[code];
-      this.open = true;
+      this.click = code;
     },
   },
 });
