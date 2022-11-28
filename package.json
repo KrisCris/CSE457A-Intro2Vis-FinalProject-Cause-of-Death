@@ -13,7 +13,8 @@
     "pinia": "^2.0.23",
     "versor": "^0.2.0",
     "vue": "^3.2.41",
-    "vue-router": "^4.1.6"
+    "vue-router": "^4.1.6",
+    "vue-virtual-scroller": "^2.0.0-beta.3"
   },
   "devDependencies": {
     "@rollup/plugin-dsv": "^3.0.1",
