@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue';
 import Graph from './components/Graph.vue';
 import useWorldStore from '../../stores/world';
 import YearSelector from '../../components/YearSelector.vue';
@@ -19,6 +20,8 @@ const onClose = () => {
   world.open = false;
 };
 
+const animateClose = ref(false);
+
 </script>
 
 <template>
@@ -38,19 +41,21 @@ const onClose = () => {
       </div>
       <Graph />
     </section>
-    <div class="detail" v-show="world.open">
-      <div class="close-wrapper">
-        <icon name="close" class="close" fill="white" :click="onClose"/>
+    <Transition name="bounce">
+      <div v-show="world.open" class="detail">
+        <div class="close-wrapper">
+          <icon name="close" class="close" fill="white" :click="onClose"/>
+        </div>
+        <div class="content-wrapper">
+          <p
+            v-for="(item, i) in world.click"
+            :key="i"
+          >
+            {{format(world.meta[i], item)}}
+          </p>
+        </div>
       </div>
-      <div class="content-wrapper">
-        <p
-          v-for="(item, i) in world.click"
-          :key="i"
-        >
-          {{format(world.meta[i], item)}}
-        </p>
-      </div>
-    </div>
+    </Transition>
   </main>
 </template>
 
@@ -111,6 +116,7 @@ section {
   text-transform: capitalize;
   width: 30rem;
   overflow: hidden;
+  transform-origin: top right;
 
   p {
     margin: 0;
@@ -134,6 +140,26 @@ section {
     overflow: auto;
     height: 20rem;
     padding: 0 2rem 2rem;
+  }
+}
+
+.bounce-enter-active {
+  animation: bounce-in 0.2s;
+}
+
+.bounce-leave-active {
+  animation: bounce-in 0.2s reverse;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  80% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 </style>
