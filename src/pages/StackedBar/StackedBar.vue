@@ -67,7 +67,7 @@ const test = () => {
         </Story>
         <div class="legend-and-search-wrapper">
           <Legend/>
-          <form class="search-wrapper" @submit="stack.updateData">
+          <form class="search-wrapper" @submit.prevent="stack.updateData">
             <input type="text" v-model="stack.search">
             <button>Search</button>
           </form>
