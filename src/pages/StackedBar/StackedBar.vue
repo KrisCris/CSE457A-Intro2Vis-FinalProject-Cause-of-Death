@@ -56,7 +56,7 @@ const test = () => {
       <header ref="header">
         <div class="search-wrapper">
           <input type="text" v-model="stack.search">
-          <button @click="stack.onSearch">Search</button>
+          <button @click="stack.updateData">Search</button>
         </div>
         <Legend/>
       </header>

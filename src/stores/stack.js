@@ -45,7 +45,14 @@ export default defineStore('stack', {
     },
     setYear(year) {
       this.year = year;
-      this.data = getCountries(year);
+      this.updateData();
+    },
+    updateData() {
+      this.data = getCountries(this.year);
+      if (this.search) {
+        this.data = this.data
+        .filter(d => new RegExp(this.search, 'i').test(d[1][0]));
+      }
     },
     getStackedData(data) {
       return stack([data]);
@@ -62,9 +69,9 @@ export default defineStore('stack', {
       }
       return '#D53E4F';
     },
-    onSearch() {
-      this.data = getCountries(this.year)
-        .filter(d => new RegExp(this.search, 'i').test(d[1][0]));
-    },
+    // onSearch() {
+    //   this.data = getCountries(this.year)
+    //     .filter(d => new RegExp(this.search, 'i').test(d[1][0]));
+    // },
   },
 });
