@@ -126,6 +126,10 @@ div {
   }
 }
 
+svg {
+  background-color: #f4f4f5;
+}
+
 path {
   cursor: pointer;
   transition: fill .3s;

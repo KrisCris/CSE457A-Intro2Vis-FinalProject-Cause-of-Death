@@ -8,6 +8,7 @@ import YearSelector from '../../components/YearSelector.vue';
 import Tooltip from '../../components/Tooltip.vue';
 import Legend from '../../components/Legend.vue';
 import Story from '../../components/Story.vue';
+import formatNum from '../../util/formatNum';
 
 const bar = barChart();
 const wrapper = ref();
@@ -107,7 +108,7 @@ onMounted(() => {
                 <div class="tooltip-content">
                   <h4>{{d[1]}}</h4>
                   <p>Year: {{bar.year}}</p>
-                  <p>Total Death: {{d[0]}} ({{d[2].toFixed(2)}}%)</p>
+                  <p>Total Death: {{formatNum(d[0])}} ({{d[2].toFixed(2)}}%)</p>
                 </div>
               </template>
             </Tooltip>
