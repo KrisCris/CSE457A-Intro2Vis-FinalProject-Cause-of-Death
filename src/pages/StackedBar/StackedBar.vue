@@ -7,6 +7,7 @@ import YearSelector from '../../components/YearSelector.vue';
 import Tooltip from '../../components/Tooltip.vue';
 import Legend from '../../components/Legend.vue';
 import Story from '../../components/Story.vue';
+import formatNum from '../../util/formatNum';
 
 const stack = stackStore();
 const wrapper = ref();
@@ -93,7 +94,7 @@ onMounted(() => {
               fill="gray"
               :x="size.width"
             >
-              Total Death: {{country[1][2]}}
+              Total Death: {{formatNum(country[1][2])}}
             </text>
             <Tooltip
               v-for="d in stack.getStackedData(country[1])"
@@ -115,8 +116,8 @@ onMounted(() => {
                 <div class="tooltip-content">
                   <h4>{{stack.meta[d.key]}}</h4>
                   <p>Year: {{stack.year}}</p>
-                  <p>Population: {{country[1][1]}}</p>
-                  <p>Death: {{country[1][d.key]}}</p>
+                  <p>Population: {{formatNum(country[1][1])}}</p>
+                  <p>Death: {{formatNum(country[1][d.key])}}</p>
                   <p>Death / Population: {{(country[1][3] * 100).toFixed(2)}}%</p>
                   <p>Death / Total Death {{((d[0][1] - d[0][0]) * 100).toFixed(2)}}%</p>
                 </div>

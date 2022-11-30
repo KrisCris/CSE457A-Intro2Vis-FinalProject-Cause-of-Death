@@ -2,6 +2,7 @@
 import Graph from './components/Graph.vue';
 import useWorldStore from '../../stores/world';
 import YearSelector from '../../components/YearSelector.vue';
+import formatNum from '../../util/formatNum';
 
 const world = useWorldStore();
 
@@ -11,6 +12,9 @@ const format = (key, value) => {
   } else if (key === 'percent') {
     key = 'Total Death / Population';
     value = `${(value * 100).toFixed(2)}%`;
+  }
+  if (key !== 'name' && key !== 'percent') {
+    value = formatNum(value);
   }
   return `${key}: ${value}`;
 };
