@@ -9,7 +9,6 @@ import Tooltip from '../../components/Tooltip.vue';
 import Legend from '../../components/Legend.vue';
 import Story from '../../components/Story.vue';
 import formatNum from '../../util/formatNum';
-import getOS from '../../util/queryOS'
 
 const bar = barChart();
 const wrapper = ref();
@@ -54,7 +53,7 @@ onMounted(() => {
       :default="bar.year"
       @change="bar.setYear"
     />
-    <section :class="(getOS() == 'Win' && 'scroll')">
+    <section>
       <header>
         <Story>
           <template #title>
@@ -129,8 +128,7 @@ main {
 
 section {
   flex: 1;
-  padding-right: 2rem;
-  overflow-y: auto;
+  padding: 0 2rem;
 }
 
 header {

@@ -83,7 +83,6 @@ const scaleColor = d => {
 
 <template>
   <div ref="wrapper">
-    <!-- <button @click="reset">reset</button> -->
     <svg
       :width="world.width"
       :height="world.width"
@@ -91,14 +90,13 @@ const scaleColor = d => {
       @dblclick.stop.self="reset"
     >
       <g ref="group">
-        <circle 
-          class="bg"
+        <circle
           v-if="world.type=='3D'"
           :cx="(world.width / 2)"
           :cy="(world.width / 2)"
           :r="(world.width / 2)"
         />
-        <rect 
+        <rect
           class="bg"
           v-else
           x="0"
@@ -142,16 +140,12 @@ div {
   }
 }
 
-// svg {
-//   background-color: #f4f4f5;
-// }
-
 path {
   cursor: pointer;
   transition: fill .3s;
 }
 
-.bg {
+circle {
   fill: #f9f9f9;
   stroke:#8a8a8a6f;
   cursor: move;

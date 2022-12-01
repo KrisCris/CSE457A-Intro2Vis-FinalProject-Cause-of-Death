@@ -8,7 +8,7 @@ import Tooltip from '../../components/Tooltip.vue';
 import Legend from '../../components/Legend.vue';
 import Story from '../../components/Story.vue';
 import formatNum from '../../util/formatNum';
-import getOS from '../../util/queryOS'
+import getOS from '../../util/queryOS';
 
 const stack = stackStore();
 const wrapper = ref();
@@ -56,7 +56,7 @@ onMounted(() => {
 <template>
   <main ref="main">
     <YearSelector :default="stack.year" @change="stack.setYear" />
-    <section ref="section" @scroll="toggleVisibleData" :class="(getOS() == 'Win' && 'scroll')">
+    <section ref="section" @scroll="toggleVisibleData">
       <header ref="header">
         <Story>
           <template #title>
@@ -133,7 +133,6 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-
 main {
   flex: 1;
   display: flex;
@@ -142,8 +141,7 @@ main {
 
 section {
   flex: 1;
-  padding-right: 2rem;
-  overflow-y: auto;
+  padding: 0 2rem;
 }
 
 header {

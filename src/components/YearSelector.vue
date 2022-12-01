@@ -1,6 +1,5 @@
 <script setup>
 import { defineEmits, defineProps, ref } from 'vue';
-import getOS from '../util/queryOS'
 
 const years = [];
 
@@ -26,7 +25,7 @@ const gap = 40;
 </script>
 
 <template>
-  <div :class="(getOS() == 'Win' && 'scroll')">
+  <div>
     <svg :height="gap * (years.length + 1)">
       <path :d="`M30 ${gap} V${years.length * gap}`"/>
       <g
@@ -43,12 +42,13 @@ const gap = 40;
       </g>
     </svg>
   </div>
-  
 </template>
 
 <style scoped lang="scss">
 div {
-  overflow-y: auto;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 svg {
