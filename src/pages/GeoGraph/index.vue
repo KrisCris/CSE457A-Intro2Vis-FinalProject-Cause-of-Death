@@ -141,6 +141,13 @@ section {
     overflow: auto;
     height: 20rem;
     padding: 0 2rem 2rem;
+
+    &::-webkit-scrollbar-track {
+      &:hover {
+        background-color: transparent;
+        border-color: transparent;
+      }
+    }
   }
 }
 
