@@ -146,13 +146,14 @@ div {
 //   background-color: #f4f4f5;
 // }
 
-.bg {
-  fill: #f9f9f9;
-  stroke:#8a8a8a6f
-}
-
 path {
   cursor: pointer;
   transition: fill .3s;
+}
+
+.bg {
+  fill: #f9f9f9;
+  stroke:#8a8a8a6f;
+  cursor: move;
 }
 </style>
