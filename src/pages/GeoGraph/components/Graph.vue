@@ -58,7 +58,7 @@ onMounted(() => {
     const { transform } = e;
     select(group.value).attr('transform', transform);
   });
-  const selection = select(svg.value);
+  const selection = select(group.value);
 
   watchEffect(() => {
     reset();
