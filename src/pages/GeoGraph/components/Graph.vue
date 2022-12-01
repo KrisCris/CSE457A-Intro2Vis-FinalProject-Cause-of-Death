@@ -29,12 +29,12 @@ let q0;
 let r0;
 
 const dragStart = e => {
-  v0 = versor.cartesian(world.projection.invert(pointer(e, svg.value)));
+  v0 = versor.cartesian(world.projection.invert(pointer(e, group.value)));
   q0 = versor((r0 = world.projection.rotate()));
 };
 
 const dragging = e => {
-  const pt = pointer(e, svg.value);
+  const pt = pointer(e, group.value);
   const v1 = versor.cartesian(world.projection.rotate(r0).invert(pt));
   const delta = versor.delta(v0, v1);
   const q1 = versor.multiply(q0, delta);
@@ -44,10 +44,10 @@ const dragging = e => {
 };
 
 const reset = () => {
-  select(svg.value).transition().duration(750).call(
+  select(group.value).transition().duration(750).call(
     zoom.transform,
     zoomIdentity,
-    zoomTransform(svg.value).invert([world.width / 2, world.width / 2]),
+    zoomTransform(group.value).invert([world.width / 2, world.width / 2]),
   );
 };
 
