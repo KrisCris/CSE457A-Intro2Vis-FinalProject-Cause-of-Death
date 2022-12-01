@@ -97,7 +97,6 @@ const scaleColor = d => {
           :r="(world.width / 2)"
         />
         <rect
-          class="bg"
           v-else
           x="0"
           y="0"
@@ -145,7 +144,7 @@ path {
   transition: fill .3s;
 }
 
-circle {
+circle, rect {
   fill: #f9f9f9;
   stroke:#8a8a8a6f;
   cursor: move;
