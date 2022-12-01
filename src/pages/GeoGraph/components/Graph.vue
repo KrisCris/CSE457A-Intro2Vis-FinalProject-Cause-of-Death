@@ -29,12 +29,12 @@ let q0;
 let r0;
 
 const dragStart = e => {
-  v0 = versor.cartesian(world.projection.invert(pointer(e, svg.value)));
+  v0 = versor.cartesian(world.projection.invert(pointer(e, group.value)));
   q0 = versor((r0 = world.projection.rotate()));
 };
 
 const dragging = e => {
-  const pt = pointer(e, svg.value);
+  const pt = pointer(e, group.value);
   const v1 = versor.cartesian(world.projection.rotate(r0).invert(pt));
   const delta = versor.delta(v0, v1);
   const q1 = versor.multiply(q0, delta);
@@ -44,10 +44,10 @@ const dragging = e => {
 };
 
 const reset = () => {
-  select(svg.value).transition().duration(750).call(
+  select(group.value).transition().duration(750).call(
     zoom.transform,
     zoomIdentity,
-    zoomTransform(svg.value).invert([world.width / 2, world.width / 2]),
+    zoomTransform(group.value).invert([world.width / 2, world.width / 2]),
   );
 };
 
@@ -58,7 +58,7 @@ onMounted(() => {
     const { transform } = e;
     select(group.value).attr('transform', transform);
   });
-  const selection = select(svg.value);
+  const selection = select(group.value);
 
   watchEffect(() => {
     reset();
@@ -88,8 +88,24 @@ const scaleColor = d => {
       :width="world.width"
       :height="world.width"
       ref="svg"
+      @dblclick.stop.self="reset"
     >
       <g ref="group">
+        <circle 
+          class="bg"
+          v-if="world.type=='3D'"
+          :cx="(world.width / 2)"
+          :cy="(world.width / 2)"
+          :r="(world.width / 2)"
+        />
+        <rect 
+          class="bg"
+          v-else
+          x="0"
+          y="0"
+          :width="world.width"
+          :height="(world.width / 1.35)"
+        />
         <Tooltip
           v-for="d in world.countries"
           :key="d.id"
@@ -126,8 +142,13 @@ div {
   }
 }
 
-svg {
-  background-color: #f4f4f5;
+// svg {
+//   background-color: #f4f4f5;
+// }
+
+.bg {
+  fill: #f9f9f9;
+  stroke:#8a8a8a6f
 }
 
 path {
