@@ -64,7 +64,7 @@ const onClose = () => {
 main {
   flex: 1;
   display: flex;
-  overflow: auto;
+  overflow: hidden;
 }
 
 section {
