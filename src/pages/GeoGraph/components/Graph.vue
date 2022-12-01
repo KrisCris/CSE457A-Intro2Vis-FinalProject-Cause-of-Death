@@ -90,6 +90,13 @@ const scaleColor = d => {
       ref="svg"
     >
       <g ref="group">
+        <circle 
+          class="bg"
+          v-if="world.type=='3D'"
+          :cx="(world.width / 2)"
+          :cy="(world.width / 2)"
+          :r="(world.width / 2)"
+        />
         <Tooltip
           v-for="d in world.countries"
           :key="d.id"
@@ -126,8 +133,13 @@ div {
   }
 }
 
-svg {
-  background-color: #f4f4f5;
+// svg {
+//   background-color: #f4f4f5;
+// }
+
+.bg {
+  fill: #f9f9f9;
+  stroke:#8a8a8a6f
 }
 
 path {
