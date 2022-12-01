@@ -8,6 +8,7 @@ import Tooltip from '../../components/Tooltip.vue';
 import Legend from '../../components/Legend.vue';
 import Story from '../../components/Story.vue';
 import formatNum from '../../util/formatNum';
+import getOS from '../../util/queryOS';
 
 const stack = stackStore();
 const wrapper = ref();
@@ -19,11 +20,12 @@ const size = reactive({
 const visibleData = ref([]);
 const main = ref();
 const header = ref();
+const section = ref();
 
 const toggleVisibleData = () => {
   const data = [];
   const offset = header.value?.getBoundingClientRect().height;
-  const upper = main.value?.scrollTop ?? 0;
+  const upper = section.value?.scrollTop ?? 0;
   const lower = upper + window.innerHeight;
 
   stack.data.forEach((d, i) => {
@@ -52,9 +54,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <main @scroll="toggleVisibleData" ref="main">
+  <main ref="main">
     <YearSelector :default="stack.year" @change="stack.setYear" />
-    <section>
+    <section ref="section" @scroll="toggleVisibleData">
       <header ref="header">
         <Story>
           <template #title>
@@ -131,7 +133,6 @@ onMounted(() => {
 </template>
 
 <style scoped lang="scss">
-
 main {
   flex: 1;
   display: flex;
@@ -140,7 +141,7 @@ main {
 
 section {
   flex: 1;
-  padding-right: 2rem;
+  padding: 0 2rem;
 }
 
 header {

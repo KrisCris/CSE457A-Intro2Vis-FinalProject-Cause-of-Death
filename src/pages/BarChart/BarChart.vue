@@ -128,7 +128,7 @@ main {
 
 section {
   flex: 1;
-  padding-right: 2rem;
+  padding: 0 2rem;
 }
 
 header {

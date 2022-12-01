@@ -25,24 +25,32 @@ const gap = 40;
 </script>
 
 <template>
-  <svg :height="gap * (years.length + 1)">
-    <path :d="`M30 ${gap} V${years.length * gap}`"/>
-    <g
-      v-for="(year, i) in years"
-      :key="year"
-      :transform="`translate(30, ${(i + 1) * gap})`"
-      :class="selectedYear === year && 'selected'"
-      @click="onChange(year)"
-    >
-      <circle r="6" />
-      <text x="20" dominant-baseline="central">
-        {{year}}
-      </text>
-    </g>
-  </svg>
+  <div>
+    <svg :height="gap * (years.length + 1)">
+      <path :d="`M30 ${gap} V${years.length * gap}`"/>
+      <g
+        v-for="(year, i) in years"
+        :key="year"
+        :transform="`translate(30, ${(i + 1) * gap})`"
+        :class="selectedYear === year && 'selected'"
+        @click="onChange(year)"
+      >
+        <circle r="6" />
+        <text x="20" dominant-baseline="central">
+          {{year}}
+        </text>
+      </g>
+    </svg>
+  </div>
 </template>
 
 <style scoped lang="scss">
+div {
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
 svg {
   width: 8rem;
 }
