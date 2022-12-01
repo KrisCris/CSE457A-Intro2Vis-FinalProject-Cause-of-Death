@@ -97,6 +97,14 @@ const scaleColor = d => {
           :cy="(world.width / 2)"
           :r="(world.width / 2)"
         />
+        <rect 
+          class="bg"
+          v-else
+          x="0"
+          y="0"
+          :width="world.width"
+          :height="(world.width / 1.35)"
+        />
         <Tooltip
           v-for="d in world.countries"
           :key="d.id"
