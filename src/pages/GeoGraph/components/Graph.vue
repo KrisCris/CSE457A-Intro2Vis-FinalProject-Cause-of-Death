@@ -88,6 +88,7 @@ const scaleColor = d => {
       :width="world.width"
       :height="world.width"
       ref="svg"
+      @dblclick.stop.self="reset"
     >
       <g ref="group">
         <circle 
