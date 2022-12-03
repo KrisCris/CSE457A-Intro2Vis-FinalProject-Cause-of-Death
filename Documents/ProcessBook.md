@@ -49,7 +49,7 @@ We would like to effectively illustrate and rank death reasons and death counts 
 
 #### Benefits
 
-- Data can be filtered by different countries, different years, and different death reasons. Users can see any kind of data that they would like to know.
+- Data can be filtered by different countries or regions, different years, and different death reasons. Users can see any kind of data that they would like to know.
 - Good intuition for the future medical research focus and the country government's social health insurance focus.
 
 ### How to accomplish those goals with your visualization properly?
@@ -65,7 +65,7 @@ We will first think about how to build our visualization, and what components or
 
 We managed to get the map working and colored each country based on the death rate. Each county's areas also have tooltips showing up when hovering, such that users can get a clear idea of the death numbers, death rates, and the population of that country. Users can switch the map between 2D and 3D.
 
-We also managed to create stacked bars to show different death types' death counts and death rates in each country. Users can select different years and search countries in the search field.
+We also managed to create stacked bars to show different death types' death counts and death rates in each country. Users can select different years and search countries or regions in the search field.
 
 We also created bar charts to show every death type's influence each year in the world. Users can also sort them by both descending or ascending sequences. We colored them by their severity.
 
@@ -73,7 +73,6 @@ We also created bar charts to show every death type's influence each year in the
 
 We found our dataset on the *country code* website and Kaggle.
 
-- Country Populations: <https://countrycode.org/>
 - Cause of Deaths around the World (Historical Data): <https://www.kaggle.com/datasets/iamsouravbanerjee/cause-of-deaths-around-the-world>
 
 The main dataset (the second one) contains the death count of various reasons for each country from 1990 to 2019.
@@ -112,7 +111,7 @@ The design of the webpage would be divided into 2 parts. The left portion would 
 - **Title and Icons**: There will be a title and an icon that shows our project on the top left part. We will use the black font color and an electrocardiogram logo to better match our project content.
 - **Navigation Bar**: There will be a navigation bar on the left side. Users can click those different buttons in the navigation bar to go into different content visualizations.
 - **Earth Map**: There will be a thumbnail of the 3D Earth map in the left bottom corner. Users can see the general world death rate map there. Countries will be given different colors with the rank of the death rate.
-- **Stacked Bar Chart:** For Vis 1 in the navigation, there will be a stacked bar chart showing different countries' death counts. Each country represents a bar. Every bar will be split into different parts with different colors, each color will represent one disease type. Users can clearly see which disease type occupies the most length of each bar.
+- **Stacked Bar Chart:** For Vis 1 in the navigation, there will be a stacked bar chart showing different countries or regions' death counts. Each country represents a bar. Every bar will be split into different parts with different colors, each color will represent one disease type. Users can clearly see which disease type occupies the most length of each bar.
 - **Line Chart**: For Vis 1 in the navigation, there will be a death count line chart in the bottom right part. It will show the trend of the total number of deaths per year in the world. Users can also use a dropdown to filter it by country.
 - **2D  Map**: For the Vis 2 in the navigation, there will be a 2D map showing all of the worlds on the right side. When Users hover their mouse on any specific country part. Then a tooltip will show this country's death count, death rate, and top 3 death reasons. Users can also update this map by year.
 - **Another Bar Chart**: For Vis 3 in the navigation, there will be another bar chart showing the total number of world death for each disease. Every death reason will be ranked and shown on this bar chart. The horizontal coordinate will be the cause of death and the vertical coordinate will be the proportion of deaths by that factor to the total number of deaths. Users can also update this map by year. In this way, users can view each year's death factor proportion and know how these diseases developed or disappeared.
@@ -125,7 +124,7 @@ The design of the webpage would be divided into 2 parts. The left portion would 
 
 ![Screenshot 2022-10-30 at 2.24.35 PM](.\assets\Screenshot 2022-10-30 at 2.24.35 PM.png)
 
-2D Map: A 2D map that shows all of the countries on the stage. The advantage is that it can show all the countries clearly and make it easier for users to find one specific country. The disadvantage of this is it may occupy most space of the website and is not visually appealing enough.
+2D Map: A 2D map that shows all of the countries or regions on the stage. The advantage is that it can show all the countries or regions clearly and make it easier for users to find one specific country. The disadvantage of this is it may occupy most space of the website and is not visually appealing enough.
 
 ![Screenshot 2022-10-30 at 2.25.09 PM](.\assets\Screenshot 2022-10-30 at 2.25.09 PM.png)
 
@@ -137,11 +136,11 @@ This line chart shows the death count trend from 1900+ to 2015. Users can also u
 
 #### Pie Chart vs. Bar Chart
 
-Although the pie chart is useful for showing the proportions of death reasons/countries, it is restricted by size. There are many different reasons and countries that the pie chart would be too crowded to show useful information.
+Although the pie chart is useful for showing the proportions of death reasons per countries or regions, it is restricted by size. There are many different reasons and countries that the pie chart would be too crowded to show useful information.
 
 ![Screenshot 2022-10-30 at 2.26.57 PM](.\assets\Screenshot 2022-10-30 at 2.26.57 PM.png)
 
-The bar chart, however, can be extended horizontally infinitely, and easy to see the order sorted by death counts, and the countries/reasons for the top death rate can be easily shown, which easily becomes our best choice.
+The bar chart, however, can be extended horizontally infinitely, and easy to see the order sorted by death counts, and the reasons for the top death rate can be easily shown, which easily becomes our best choice.
 
 ![Screenshot 2022-10-30 at 2.27.35 PM](.\assets\Screenshot 2022-10-30 at 2.27.35 PM.png)
 
@@ -161,7 +160,7 @@ We also planned to set 2D and 3D maps on different pages. After consideration, w
 
 #### Change the dropdown into the search bar
 
-In the proposal design, we thought we could use a dropdown to search a country or death reason information. However, during implementation, we found that there were a lot of death reasons and more than 200 countries. It was obvious that using dropdown would ruin the user experience. Finally, we decided to use a search bar instead to let users search by themselves.
+In the proposal design, we thought we could use a dropdown to search a country or death reason information. However, during implementation, we found that there were a lot of death reasons and more than 200 countries or regions. It was obvious that using dropdown would ruin the user experience. Finally, we decided to use a search bar instead to let users search by themselves.
 
 #### Remove the line chart
 
