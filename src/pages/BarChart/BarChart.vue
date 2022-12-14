@@ -60,7 +60,7 @@ onMounted(() => {
             This visualization shows the severity of different death types throughout the whole world.
           </template>
           <template #content>
-            Overall, the total number of deaths in most countries shows an upward trend with each year. This roughly stems from the rise in world population, which is predictable. Each country shows different percentages of death reasons while Cardiovascular Diseases and Neoplasms remain the leading causes of death in the majority of countries. Some countries do not have very high threat level death reasons, only some relatively high threat death reasons, while some countries have much more serious death reasons. This may be closely related to each country's situation, people's diet, climate, and other factors.
+            Overall, the total number of deaths in most countries/regions shows an upward trend with each year. This roughly stems from the rise in world population, which is predictable. Each country/region shows different percentages of death reasons while Cardiovascular Diseases and Neoplasms remain the leading causes of death in the majority of countries/regions. Some countries/regions do not have very high threat level death reasons, only some relatively high threat death reasons, while some countries/regions have much more serious death reasons. This may be closely related to each country/region's situation, people's diet, climate, and other factors.
           </template>
         </Story>
         <div class="legend-order-wrapper">
