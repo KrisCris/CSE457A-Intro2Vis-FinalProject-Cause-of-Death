@@ -84,7 +84,6 @@ section {
     transform: translateY(-50%);
     left: 3rem;
     font-size: 3rem;
-
   }
 
   .selector {

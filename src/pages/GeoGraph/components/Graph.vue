@@ -29,12 +29,12 @@ let q0;
 let r0;
 
 const dragStart = e => {
-  v0 = versor.cartesian(world.projection.invert(pointer(e, group.value)));
+  v0 = versor.cartesian(world.projection.invert(pointer(e, svg.value)));
   q0 = versor((r0 = world.projection.rotate()));
 };
 
 const dragging = e => {
-  const pt = pointer(e, group.value);
+  const pt = pointer(e, svg.value);
   const v1 = versor.cartesian(world.projection.rotate(r0).invert(pt));
   const delta = versor.delta(v0, v1);
   const q1 = versor.multiply(q0, delta);
@@ -44,21 +44,21 @@ const dragging = e => {
 };
 
 const reset = () => {
-  select(group.value).transition().duration(750).call(
+  select(svg.value).transition().duration(750).call(
     zoom.transform,
     zoomIdentity,
-    zoomTransform(group.value).invert([world.width / 2, world.width / 2]),
+    zoomTransform(svg.value).invert([world.width / 2, world.width / 2]),
   );
 };
 
 onMounted(() => {
   const { width } = wrapper.value.getBoundingClientRect();
-  world.init(width - 100);
+  world.init(width);
   zoom.on('zoom', e => {
     const { transform } = e;
     select(group.value).attr('transform', transform);
   });
-  const selection = select(group.value);
+  const selection = select(svg.value);
 
   watchEffect(() => {
     reset();
@@ -82,27 +82,17 @@ const scaleColor = d => {
 </script>
 
 <template>
-  <div ref="wrapper">
+  <button @click="reset">reset</button>
+  <div ref="wrapper" :class="[
+    'wrapper',
+    { round: world.type === '3D' }
+  ]">
     <svg
       :width="world.width"
-      :height="world.width"
+      :height="world.height"
       ref="svg"
-      @dblclick.stop.self="reset"
     >
       <g ref="group">
-        <circle
-          v-if="world.type=='3D'"
-          :cx="(world.width / 2)"
-          :cy="(world.width / 2)"
-          :r="(world.width / 2)"
-        />
-        <rect
-          v-else
-          x="0"
-          y="0"
-          :width="world.width"
-          :height="(world.width / 1.35)"
-        />
         <Tooltip
           v-for="d in world.countries"
           :key="d.id"
@@ -127,16 +117,16 @@ const scaleColor = d => {
 </template>
 
 <style scoped lang="scss">
-div {
+.wrapper {
   display: flex;
   justify-content: center;
   position: relative;
+  overflow: hidden;
+  margin: 3rem;
+}
 
-  button {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
+.round {
+  border-radius: 50%;
 }
 
 path {
@@ -144,9 +134,32 @@ path {
   transition: fill .3s;
 }
 
-circle, rect {
-  fill: #f9f9f9;
-  stroke:#8a8a8a6f;
+svg {
+  background-color: #f9f9f9;
   cursor: move;
+}
+
+button {
+  margin-left: 3rem;
+  padding: 0.5rem 1rem;
+  outline: none;
+  border: 1px solid #A0CFFF;
+  background-color: #ECF5FF;
+  color: #409EFF;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .2s;
+  font-size: 1rem;
+
+  &:hover {
+    background-color: #409EFF;
+    color: white;
+    border-color: #409EFF;
+  }
+
+  &:active {
+    background-color: #337ecc;
+    border-color: #337ecc;
+  }
 }
 </style>
