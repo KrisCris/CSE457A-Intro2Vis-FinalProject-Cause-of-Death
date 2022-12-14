@@ -111,6 +111,7 @@ export default defineStore('world', {
     type: '3D',
     year: 1990,
     width: 0,
+    height: 0,
     pathGenerator: null,
     countries: null,
     data: death[1990],
@@ -126,11 +127,20 @@ export default defineStore('world', {
         return;
       }
       this.type = type;
+      this.updateHeight();
       this.projection = projection[this.type](this.width);
       this.pathGenerator = geoPath(this.projection);
     },
+    updateHeight() {
+      if (this.type === '3D') {
+        this.height = this.width;
+      } else if (this.type === '2D') {
+        this.height = this.width / 1.35;
+      }
+    },
     init(width) {
       this.width = width;
+      this.updateHeight();
       this.projection = projection[this.type](this.width);
       this.pathGenerator = geoPath(this.projection);
       this.countries = world.features;
