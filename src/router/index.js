@@ -21,9 +21,13 @@ export default createRouter({
       path: '/process-book',
       component: () => import('../pages/ProcessBook/index.vue'),
     },
+    // {
+    //   path: '/about',
+    //   component: () => import('../pages/About/index.vue'),
+    // },
     {
-      path: '/about',
-      component: () => import('../pages/About/index.vue'),
+      path: '/video',
+      component: () => import('../pages/Video/index.vue'),
     },
     {
       path: '/',
