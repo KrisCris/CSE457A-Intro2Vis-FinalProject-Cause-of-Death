@@ -4,7 +4,8 @@ const items = [
   { path: '/stacked-bar', text: 'Region Death Detail', icon: 'stack-bar' },
   { path: '/bar-chart', text: 'Death Type Detail', icon: 'stacked-bar' },
   { path: '/process-book', text: 'Process Book', icon: 'book' },
-  { path: '/about', text: 'About', icon: 'about' },
+  // { path: '/about', text: 'About', icon: 'about' },
+  { path: '/video', text: 'Video', icon: 'video' },
 ];
 </script>
 
