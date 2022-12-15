@@ -1,5 +1,5 @@
 <template>
-  <iframe src="https://www.youtube.com/embed/VJ3NGzxxdyw" frameborder="0"></iframe>
+  <iframe src="https://www.youtube.com/embed/7DODx8dwoAk" frameborder="0"></iframe>
 </template>
 
 <style scoped lang="scss">
