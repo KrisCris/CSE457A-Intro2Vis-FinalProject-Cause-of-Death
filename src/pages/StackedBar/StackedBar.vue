@@ -8,7 +8,6 @@ import Tooltip from '../../components/Tooltip.vue';
 import Legend from '../../components/Legend.vue';
 import Story from '../../components/Story.vue';
 import formatNum from '../../util/formatNum';
-import getOS from '../../util/queryOS';
 
 const stack = stackStore();
 const wrapper = ref();
@@ -120,7 +119,7 @@ onMounted(() => {
                   <p>Year: {{stack.year}}</p>
                   <p>Population: {{formatNum(country[1][1])}}</p>
                   <p>Death: {{formatNum(country[1][d.key])}}</p>
-                  <p>Death / Population: {{(country[1][3] * 100).toFixed(2)}}%</p>
+                  <p>Death / Population: {{(country[1][d.key] / country[1][1] * 100).toFixed(2)}}%</p>
                   <p>Death / Total Death {{((d[0][1] - d[0][0]) * 100).toFixed(2)}}%</p>
                 </div>
               </template>
