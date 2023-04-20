@@ -1,7 +1,6 @@
-# CSE 457 Final project- Causes of Deaths
+# Wash U CSE 457
 
-## Project Website Link: [csex57.github.io/causeofdeath](https://csex57.github.io/causeofdeath)
+WUSTL CSE457A Intro to Visualization Final Project
 
-## Project Video: https://www.youtube.com/watch?v=7DODx8dwoAk&ab_channel=_connlost
+https://csex57.github.io/causeofdeath
 
-## Project Process Book: https://csex57.github.io/causeofdeath/#/process-book
