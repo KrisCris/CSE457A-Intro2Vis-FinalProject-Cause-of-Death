@@ -1,0 +1,1 @@
+import{_ as e,o as _,c as o}from"./index.57c99b8c.js";const c={},s={src:"ProcessBook/index.html",frameborder:"0"};function t(n,r){return _(),o("iframe",s)}const a=e(c,[["render",t],["__scopeId","data-v-d40f39f5"]]);export{a as default};

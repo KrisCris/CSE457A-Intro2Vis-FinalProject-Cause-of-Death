@@ -1,0 +1,1 @@
+import{_ as e,o as _,c as o}from"./index.57c99b8c.js";const t={},c={src:"https://www.youtube.com/embed/7DODx8dwoAk",frameborder:"0"};function s(n,r){return _(),o("iframe",c)}const d=e(t,[["render",s],["__scopeId","data-v-e8719749"]]);export{d as default};
