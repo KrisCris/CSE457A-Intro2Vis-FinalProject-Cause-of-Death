@@ -15,4 +15,3 @@ jobs:
         username: 'kriscris'
         reponame: 'cse457a-intro2vis-causesofdeath'
         token: ${{ secrets.GITHUB_TOKEN }}
-        options: '--base=/causeofdeath/'
