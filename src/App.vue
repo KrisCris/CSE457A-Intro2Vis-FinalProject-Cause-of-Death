@@ -3,9 +3,9 @@ const items = [
   { path: '/geo-graph', text: 'World Death Map', icon: 'world' },
   { path: '/stacked-bar', text: 'Region Death Detail', icon: 'stack-bar' },
   { path: '/bar-chart', text: 'Death Type Detail', icon: 'stacked-bar' },
-  { path: '/process-book', text: 'Process Book', icon: 'book' },
+  // { path: '/process-book', text: 'Process Book', icon: 'book' },
   // { path: '/about', text: 'About', icon: 'about' },
-  { path: '/video', text: 'Video', icon: 'video' },
+  // { path: '/video', text: 'Video', icon: 'video' },
 ];
 </script>
 
