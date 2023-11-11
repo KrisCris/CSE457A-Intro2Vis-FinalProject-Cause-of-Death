@@ -12,7 +12,7 @@ jobs:
     - id: Build-Vue
       uses: KrisCris/VuePagesAction@1.0.1
       with:
-        username: 'csex57'
-        reponame: 'causeofdeath'
+        username: 'kriscris'
+        reponame: 'cse457a-intro2vis-causesofdeath'
         token: ${{ secrets.GITHUB_TOKEN }}
         options: '--base=/causeofdeath/'
